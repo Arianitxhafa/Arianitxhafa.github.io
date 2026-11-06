@@ -302,6 +302,16 @@ section { position: relative; }
 .spark { display: flex; align-items: flex-end; gap: 4px; height: 34px; }
 .spark i { flex: 1; height: var(--h); background: #4f7cff; border-radius: 3px; }
 
+/* Screenshot frame (CareerPilot) */
+.shot { position: relative; margin: 0; width: 88%; border-radius: 14px; overflow: hidden; background: #070b14; border: 1px solid rgba(255,255,255,.08); box-shadow: 0 50px 90px -30px rgba(0,0,0,.7); transform: rotate(-1.5deg) translate(-4%, -6%); }
+.shot__bar { display: flex; align-items: center; gap: 7px; padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,.07); font-family: var(--mono); font-size: 11px; color: #8b95ab; background: #0e1424; }
+.shot__bar i { width: 10px; height: 10px; border-radius: 50%; }
+.shot__bar i:nth-child(1) { background: #ff5f57; } .shot__bar i:nth-child(2) { background: #febc2e; } .shot__bar i:nth-child(3) { background: #28c840; }
+.shot__bar span { margin-left: 8px; }
+.shot img { display: block; width: 100%; height: auto; }
+.phone.phone--corner { width: clamp(110px, 9.5vw, 150px); right: 5%; bottom: 6%; transform: rotate(5deg); border-width: 5px; border-radius: 26px; animation: bob 7s ease-in-out infinite; z-index: 2; }
+.phone--corner img { border-radius: 21px; }
+
 /* Editor (CareerPilot) */
 .editor { position: relative; width: 84%; border-radius: 14px; background: #110f1a; border: 1px solid rgba(167,139,250,.2); color: #e7e2ff; overflow: hidden; box-shadow: 0 50px 90px -30px rgba(0,0,0,.7); transform: rotate(1.5deg); }
 .editor__bar { border-color: rgba(255,255,255,.07); color: #8c86a8; }
