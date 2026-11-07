@@ -73,11 +73,24 @@
 
     <section>
       <h2><i></i>Profile</h2>
-      <p class="summary">Final-year Computer Science &amp; Engineering student who builds full-stack web and mobile applications end to end — from database schema and API to the interface. Shipped <b>Rentigo</b>, a live car rental platform on a hand-written Node.js server, and <b>CareerPilot</b>, a Next.js job-application tracker, and am lead developer of <b>TrimTime</b>, a React Native booking platform for barbershops. Certified in Java OOP. Looking for an internship or junior developer role where I can learn fast and ship real products.</p>
+      <p class="summary">Final-year Computer Science &amp; Engineering student who builds full-stack web and mobile applications end to end — from database schema and API to the interface. Shipped <b>Faturo</b> (multi-tenant invoicing SaaS), <b>Rentigo</b> (car rental platform) and <b>CareerPilot</b> (job-application tracker), and am lead developer of <b>TrimTime</b>, a React Native booking app. Looking for an internship or junior developer role where I can learn fast and ship real products.</p>
     </section>
 
     <section>
       <h2><i></i>Projects</h2>
+
+      <div class="item">
+        <div class="item__head">
+          <h3>Faturo <span>— Multi-tenant invoicing SaaS for freelancers &amp; small businesses</span></h3>
+          <span class="meta"><a href="https://faturo-two.vercel.app">Live demo</a> · <a href="https://github.com/Arianitxhafa/faturo">GitHub</a></span>
+        </div>
+        <p class="stack">Next.js 16 · React 19 · TypeScript · PostgreSQL (Neon) · Drizzle ORM · Auth.js · Zod · Tailwind CSS · Vercel</p>
+        <ul class="bullets">
+          <li>Multi-tenant workspaces with owner/admin/member roles; tenant isolation verified by end-to-end tests.</li>
+          <li>Invoices with VAT (18/8/0 %), discounts and sequential numbering; money kept in integer cents and recomputed on the server; PDF export with embedded fonts.</li>
+          <li>Dashboard built on SQL aggregates (revenue, unpaid, overdue, 12-month chart); one-click demo seeds a year of data in one atomic batch and self-deletes after 24 h.</li>
+        </ul>
+      </div>
 
       <div class="item">
         <div class="item__head">
@@ -86,8 +99,7 @@
         </div>
         <p class="stack">Node.js · SQLite (node:sqlite) · JavaScript · HTML/CSS · REST API · Render</p>
         <ul class="bullets">
-          <li>Built a JSON API on Node's built-in HTTP module covering user accounts, online bookings, customer inquiries and a protected admin dashboard with statistics and fleet management.</li>
-          <li>Implemented secure authentication: scrypt password hashing with random salts, HttpOnly/Secure session cookies with expiry and constant-time comparisons.</li>
+          <li>JSON API on Node's HTTP module: bookings, inquiries, admin dashboard; scrypt hashing and HttpOnly sessions.</li>
           <li>Deployed to Render with an infrastructure-as-code blueprint; the database is created and seeded automatically.</li>
         </ul>
       </div>
@@ -100,8 +112,7 @@
         <p class="stack">React Native · Expo · TypeScript · Supabase · PostgreSQL</p>
         <ul class="bullets">
           <li>Developed the large majority of a two-sided app: clients discover nearby shops and book in seconds; owners manage calendar, staff, clients (CRM) and analytics.</li>
-          <li>Real-time bookings with server-side pricing, database-level protection against double bookings and Row Level Security.</li>
-          <li>Imported 379 barbershops in 31 Kosovo cities from OpenStreetMap, ranked by GPS distance; Albanian/English and dark/light themes.</li>
+          <li>Real-time bookings with server-side pricing, database-level protection against double bookings and Row Level Security; 379 barbershops imported from OpenStreetMap.</li>
           <li>Native features: maps, push reminders, camera portfolio, QR check-in and Face ID / fingerprint app lock.</li>
         </ul>
       </div>
@@ -114,8 +125,7 @@
         <p class="stack">Next.js 16 · React 19 · TypeScript · Supabase · Tailwind CSS · Node test runner · Vercel</p>
         <ul class="bullets">
           <li>Job-match co-pilot: a unit-tested matcher detects 70+ technologies in a job post, weighs required vs nice-to-have skills and scores the user's CV; optional Claude analysis via structured outputs.</li>
-          <li>Kanban pipeline with drag and drop and optimistic updates, backed by validated Server Actions; live stats for response rate, interviews and offers.</li>
-          <li>Supabase Auth with Postgres Row Level Security and database triggers, so each user can only read and change their own data.</li>
+          <li>Drag-and-drop Kanban with optimistic updates via Server Actions; Row Level Security isolates each user's data.</li>
         </ul>
       </div>
     </section>
@@ -137,7 +147,7 @@
       <dl class="skills">
         <dt>Languages</dt><dd>JavaScript, TypeScript, Java, C#, SQL, HTML5, CSS3</dd>
         <dt>Frameworks</dt><dd>Node.js, React, Next.js, React Native, Expo, Tailwind CSS, WordPress</dd>
-        <dt>Data &amp; backend</dt><dd>PostgreSQL, SQLite, Supabase (Auth, Storage, Row Level Security), REST APIs</dd>
+        <dt>Data &amp; backend</dt><dd>PostgreSQL, SQLite, Drizzle ORM, Supabase (Auth, Storage, Row Level Security), Auth.js, REST APIs</dd>
         <dt>Tools</dt><dd>Git, GitHub, Vercel, Render, VS Code, Adobe Photoshop</dd>
       </dl>
     </section>

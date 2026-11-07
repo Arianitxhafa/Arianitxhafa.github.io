@@ -273,7 +273,7 @@
     ['p', '$ cat focus.txt'],
     ['o', 'mobile (react native · expo) / full-stack web (node · next.js) / databases'],
     ['p', '$ ls ~/projects'],
-    ['o', 'rentigo/   trimtime/   career-pilot/'],
+    ['o', 'rentigo/   trimtime/   career-pilot/   faturo/'],
     ['p', '$ cat languages.txt'],
     ['o', 'albanian (native) · english (B2) · french (A1)'],
     ['p', '$ ./status --now'],
