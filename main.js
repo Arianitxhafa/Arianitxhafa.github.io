@@ -419,3 +419,22 @@
 
   if (document.fonts?.ready) document.fonts.ready.then(() => ST.refresh());
 })();
+
+/* Stacked project cards: a card taller than the screen would hide its buttons behind the next card,
+   so it sticks with its bottom in view instead of its top. Cards that fit keep their stacked offset. */
+(() => {
+  const cards = [...document.querySelectorAll('.project')];
+  const fit = () => {
+    for (const card of cards) {
+      card.style.top = '';
+      const style = getComputedStyle(card);
+      if (style.position !== 'sticky') continue;
+      const room = window.innerHeight - card.offsetHeight - 16;
+      if (room < parseFloat(style.top)) card.style.top = `${Math.round(room)}px`;
+    }
+  };
+  fit();
+  window.addEventListener('resize', fit);
+  window.addEventListener('load', fit);
+  if (document.fonts?.ready) document.fonts.ready.then(fit);
+})();

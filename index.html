@@ -208,16 +208,16 @@
         <!-- CareerPilot -->
         <article class="project" style="--accent:#FFB547; --i:2" data-cursor="Explore">
           <div class="project__info">
-            <div class="project__meta"><span>03</span><span>Full-stack web app · Job-match co-pilot</span><span>2026</span></div>
+            <div class="project__meta"><span>03</span><span>Full-stack web app · CV tools · PWA</span><span>2026</span></div>
             <h3 class="project__title">CareerPilot</h3>
             <p class="project__tag">Your job search, under control.</p>
-            <p class="project__desc">A job-application tracker for students entering the job market: every application on one Kanban board, the numbers that matter — and a co-pilot that scores your CV against each job post.</p>
+            <p class="project__desc">A job-search co-pilot for students: paste a job link and it's on your Kanban board, scored against your CV, with interviews and follow-ups on a calendar — in English and Albanian, installable on your phone.</p>
             <ul class="project__points">
-              <li>Job-match co-pilot: a unit-tested matcher scores your CV against a job post and lists missing skills; Claude-powered analysis is built in</li>
-              <li>Kanban pipeline with drag and drop, optimistic updates and Server Actions</li>
-              <li>Supabase Auth and Postgres Row Level Security — every user only ever sees their own data</li>
+              <li>Import a job from its link — JobPosting data read behind an SSRF-guarded server fetch — then match it to your CV</li>
+              <li>CV tools: in-browser PDF import, match scores across every job, the skills worth learning next and cover-letter templates</li>
+              <li>Calendar with .ics export, insights (funnel, weekly goal), CSV export — all behind Postgres Row Level Security</li>
             </ul>
-            <ul class="chips"><li>Next.js 16</li><li>TypeScript</li><li>Supabase</li><li>Tailwind CSS</li><li>Unit tests</li></ul>
+            <ul class="chips"><li>Next.js 16</li><li>TypeScript</li><li>Supabase</li><li>Tailwind CSS</li><li>PWA</li><li>Unit tests</li></ul>
             <div class="project__links">
               <a class="btn" href="https://github.com/Arianitxhafa/career-pilot" target="_blank" rel="noopener" data-magnetic>View code <span>↗</span></a>
               <a class="btn btn--ghost" href="https://career-pilot-weld-six.vercel.app/" target="_blank" rel="noopener" data-magnetic>Live demo <span>↗</span></a>
@@ -227,9 +227,9 @@
             <div class="glow"></div>
             <figure class="shot">
               <div class="shot__bar"><i></i><i></i><i></i><span>career-pilot-weld-six.vercel.app</span></div>
-              <img src="assets/careerpilot/dashboard.webp" alt="CareerPilot dashboard with stats and a Kanban board of job applications" loading="lazy" width="1400" height="875" />
+              <img src="assets/careerpilot/dashboard.webp" alt="CareerPilot dashboard: flight-status sidebar, stats, this week's interviews and follow-ups, and a Kanban board of job applications" loading="lazy" width="1400" height="875" />
             </figure>
-            <figure class="float-card"><span class="float-card__label">✨ Co-pilot</span><img src="assets/careerpilot/copilot.webp" alt="CareerPilot co-pilot showing a 59 match score, skills found in the CV and missing keywords" loading="lazy" width="760" height="368" /></figure>
+            <figure class="float-card"><span class="float-card__label">◎ Job match</span><img src="assets/careerpilot/match.webp" alt="CareerPilot Job match: jobs ranked by CV match score (83 and 62) with the skills each one is missing" loading="lazy" width="796" height="282" /></figure>
           </div>
         </article>
         <!-- Faturo -->

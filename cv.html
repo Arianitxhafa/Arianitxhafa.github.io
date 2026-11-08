@@ -119,13 +119,14 @@
 
       <div class="item">
         <div class="item__head">
-          <h3>CareerPilot <span>— Job-application tracker with a job-match co-pilot</span></h3>
+          <h3>CareerPilot <span>— Job-search tracker with CV matching, job import and an installable app</span></h3>
           <span class="meta"><a href="https://career-pilot-weld-six.vercel.app">Live demo</a> · <a href="https://github.com/Arianitxhafa/career-pilot">GitHub</a></span>
         </div>
-        <p class="stack">Next.js 16 · React 19 · TypeScript · Supabase · Tailwind CSS · Node test runner · Vercel</p>
+        <p class="stack">Next.js 16 · React 19 · TypeScript · Supabase · Tailwind CSS · PWA · Node test runner · Vercel</p>
         <ul class="bullets">
-          <li>Job-match co-pilot: a unit-tested matcher detects 70+ technologies in a job post, weighs required vs nice-to-have skills and scores the user's CV; optional Claude analysis via structured outputs.</li>
-          <li>Drag-and-drop Kanban with optimistic updates via Server Actions; Row Level Security isolates each user's data.</li>
+          <li>Job import from a link: reads JobPosting data and the Greenhouse API through an SSRF-guarded server fetch.</li>
+          <li>CV tools: in-browser PDF import, a unit-tested matcher that ranks every job, and cover-letter templates.</li>
+          <li>Kanban, calendar with .ics export and CSV export; Row Level Security isolates each user's data.</li>
         </ul>
       </div>
     </section>
