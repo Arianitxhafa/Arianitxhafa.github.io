@@ -704,3 +704,26 @@ body { background: radial-gradient(120vw 80vh at 50% -10%, #0b1636 0%, transpare
   .tech svg, .intro__pic img { filter: none; }
   .js .section__head[data-reveal] .section__title { filter: none; }
 }
+
+/* ── Phones and tablets: the effects back, in light versions that stay within Safari's memory ── */
+@media (max-width: 980px), (pointer: coarse) {
+  /* A single blurred element is cheap, so the navbar keeps its real frosted glass. */
+  .nav {
+    -webkit-backdrop-filter: blur(16px) saturate(140%) !important; backdrop-filter: blur(16px) saturate(140%) !important;
+    background: rgba(10, 13, 26, 0.72);
+  }
+  /* Cards: a glass look without any blur — a soft sheen from the top-left, a lit top edge and a cool rim,
+     all plain paint, so no GPU copies of the background. */
+  .card {
+    background:
+      linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0) 42%),
+      linear-gradient(180deg, rgba(22, 32, 66, 0.84), rgba(9, 14, 32, 0.92));
+    border-color: rgba(143, 182, 255, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.11), 0 24px 60px -32px rgba(0, 0, 0, 0.8);
+  }
+  /* The drifting nebula is painted into the star canvas instead (main.js), so it moves again without
+     two screen-and-a-half-sized layers. */
+  .nebula { display: none; }
+  /* The border light runs only on the cards that are on screen (main.js adds .is-lit). */
+  .stat.is-lit::before, .project.is-lit::before, .music.is-lit::before { display: block; animation: beam 7s linear infinite; }
+}

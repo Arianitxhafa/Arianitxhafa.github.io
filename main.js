@@ -181,6 +181,8 @@
   }
 
   /* ── Starfield: twinkling, slowly drifting stars and a steady stream of shooting stars ── */
+  // Phones and tablets get light versions of the heavy effects (see the matching blocks at the end of styles.css).
+  const TOUCH_LIGHT = matchMedia('(max-width: 980px), (pointer: coarse)').matches;
   const sky = document.querySelector('.sky');
   if (sky) {
     const ctx = sky.getContext('2d');
@@ -201,10 +203,29 @@
       }));
       if (reduced) draw(0);
     };
+    // On phones and tablets the drifting nebula glows are painted here, under the stars, instead of as two
+    // big animated CSS layers (those used too much of Safari's memory). [x, y, radius, rgb, alpha, period ms]
+    const NEBULA = TOUCH_LIGHT ? [
+      [0.12, 0.2, 0.75, '59, 123, 255', 0.2, 26000], [0.75, 0.08, 0.55, '143, 182, 255', 0.09, 31000],
+      [0.88, 0.72, 0.7, '64, 56, 220', 0.17, 34000], [0.28, 0.92, 0.55, '70, 135, 255', 0.1, 29000],
+    ] : null;
+    const drawNebula = (time) => {
+      const size = Math.max(w, h * 0.62);
+      NEBULA.forEach(([x, y, r, rgb, a, period], i) => {
+        const ph = reduced ? 0 : Math.sin((time / period) * Math.PI * 2 + i * 1.7);
+        const cx = (x + 0.07 * ph) * w, cy = (y + 0.05 * Math.cos((time / period) * Math.PI * 2 + i)) * h;
+        const rad = r * size * (1 + 0.08 * ph);
+        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
+        g.addColorStop(0, `rgba(${rgb}, ${a})`); g.addColorStop(1, `rgba(${rgb}, 0)`);
+        ctx.fillStyle = g;
+        ctx.fillRect(cx - rad, cy - rad, rad * 2, rad * 2);
+      });
+    };
     const draw = (time) => {
       const dt = Math.min(50, time - (last || time)) / 16.7; // frames' worth of motion, steady at any refresh rate
       last = time;
       ctx.clearRect(0, 0, w, h);
+      if (NEBULA) { ctx.globalAlpha = 1; drawNebula(time); }
       for (const st of stars) {
         if (!reduced) st.x -= 0.035 * st.depth * dt; // slow drift to the left
         if (st.x < -4) st.x += w + 8;
@@ -547,6 +568,14 @@
       setTimeout(() => { note.textContent = defaultNote; note.className = 'form__note'; }, 14000);
     });
     form.addEventListener('input', (e) => e.target.removeAttribute('aria-invalid'));
+  }
+
+  /* ── Phones and tablets: the border light runs only on the cards that are on screen ── */
+  if (TOUCH_LIGHT && !reduced && 'IntersectionObserver' in window) {
+    const lightIO = new IntersectionObserver((entries) => {
+      for (const e of entries) e.target.classList.toggle('is-lit', e.isIntersecting);
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.stat, .project, .music').forEach((el) => lightIO.observe(el));
   }
 
   /* ── Spotify: the real player loads by itself when the music section comes into view and is unloaded again
