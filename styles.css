@@ -388,6 +388,8 @@ html:has(.modal[open]) { overflow: hidden; }
 .music__text p { color: var(--muted); max-width: 420px; }
 .music__player { position: relative; border-radius: 16px; overflow: hidden; min-height: 352px; background: #121218; }
 .music__player iframe { display: block; border: 0; border-radius: 16px; }
+.music__frame { position: relative; z-index: 1; opacity: 0; transition: opacity 0.4s ease; }
+.music__frame.is-ready { opacity: 1; }
 .music__facade {
   position: absolute; inset: 0; width: 100%; display: grid; place-content: center; justify-items: center; gap: 10px;
   border: 0; border-radius: 16px; color: #fff; cursor: pointer; font: inherit; text-align: center;

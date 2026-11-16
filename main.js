@@ -549,16 +549,37 @@
     form.addEventListener('input', (e) => e.target.removeAttribute('aria-invalid'));
   }
 
-  /* ── Spotify: swap the placeholder for the real player on click ── */
+  /* ── Spotify: the real player loads by itself once the visitor scrolls near it (so the first page load stays
+     fast); the "Deep Focus" card shows until it's ready, then the player fades in over it. A click loads it at once. ── */
   const facade = document.querySelector('.music__facade');
-  facade?.addEventListener('click', () => {
-    const frame = document.createElement('iframe');
-    frame.title = 'Spotify playlist: coding soundtrack';
-    frame.src = facade.dataset.embed;
-    frame.width = '100%';
-    frame.height = '352';
-    frame.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
-    facade.replaceWith(frame);
-    frame.focus();
-  });
+  if (facade) {
+    let loaded = false;
+    const loadPlayer = (focus) => {
+      if (loaded) return;
+      loaded = true;
+      const frame = document.createElement('iframe');
+      frame.title = 'Spotify playlist: Deep Focus';
+      frame.src = facade.dataset.embed;
+      frame.width = '100%';
+      frame.height = '352';
+      frame.loading = 'eager';
+      frame.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+      frame.className = 'music__frame';
+      frame.addEventListener('load', () => {
+        frame.classList.add('is-ready');
+        setTimeout(() => facade.remove(), 450);
+        if (focus) frame.focus();
+      }, { once: true });
+      facade.after(frame);
+      facade.tabIndex = -1;
+    };
+    facade.addEventListener('click', () => loadPlayer(true));
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([entry], io) => {
+        if (entry.isIntersecting) { io.disconnect(); loadPlayer(false); }
+      }, { rootMargin: '700px 0px' }).observe(facade);
+    } else {
+      loadPlayer(false);
+    }
+  }
 })();
