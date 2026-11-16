@@ -549,37 +549,38 @@
     form.addEventListener('input', (e) => e.target.removeAttribute('aria-invalid'));
   }
 
-  /* ── Spotify: the real player loads by itself once the visitor scrolls near it (so the first page load stays
-     fast); the "Deep Focus" card shows until it's ready, then the player fades in over it. A click loads it at once. ── */
+  /* ── Spotify: the real player loads by itself when the music section comes into view and is unloaded again
+     once the visitor has scrolled well past it. The embed is a whole web page of its own (≈100 MB on a phone);
+     keeping it alive while the projects and certificates load can make a phone browser kill and reload the tab.
+     The "Deep Focus" card stays underneath and shows while the player (re)loads. A tap on it loads it at once. ── */
   const facade = document.querySelector('.music__facade');
   if (facade) {
-    let loaded = false;
+    let frame = null;
     const loadPlayer = (focus) => {
-      if (loaded) return;
-      loaded = true;
-      const frame = document.createElement('iframe');
+      if (frame) return;
+      frame = document.createElement('iframe');
       frame.title = 'Spotify playlist: Deep Focus';
       frame.src = facade.dataset.embed;
       frame.width = '100%';
       frame.height = '352';
-      frame.loading = 'eager';
       frame.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
       frame.className = 'music__frame';
-      frame.addEventListener('load', () => {
-        frame.classList.add('is-ready');
-        setTimeout(() => facade.remove(), 450);
-        if (focus) frame.focus();
-      }, { once: true });
-      facade.after(frame);
+      const f = frame;
+      f.addEventListener('load', () => { f.classList.add('is-ready'); if (focus) f.focus(); }, { once: true });
+      facade.after(f);
       facade.tabIndex = -1;
+    };
+    const unloadPlayer = () => {
+      if (!frame) return;
+      frame.remove();
+      frame = null;
+      facade.tabIndex = 0;
     };
     facade.addEventListener('click', () => loadPlayer(true));
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(([entry], io) => {
-        if (entry.isIntersecting) { io.disconnect(); loadPlayer(false); }
-      }, { rootMargin: '700px 0px' }).observe(facade);
-    } else {
-      loadPlayer(false);
+      // Load when it's about to be seen; unload as soon as it has scrolled out of sight.
+      new IntersectionObserver(([e]) => { if (e.isIntersecting) loadPlayer(false); }, { rootMargin: '150px 0px' }).observe(facade);
+      new IntersectionObserver(([e]) => { if (!e.isIntersecting) unloadPlayer(); }, { rootMargin: '10% 0px' }).observe(facade);
     }
   }
 })();

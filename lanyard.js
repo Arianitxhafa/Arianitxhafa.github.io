@@ -10,6 +10,7 @@ const canvas = document.querySelector('.lanyard');
 const hero = document.querySelector('.hero');
 const badge = document.querySelector('.hero__badge');
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const SMALL_SCREEN = matchMedia('(max-width: 980px), (pointer: coarse)').matches;
 const SHORT_LANDSCAPE = '(max-width: 980px) and (orientation: landscape) and (max-height: 560px)';
 
 // Artwork size (2D canvas → texture) and palette: cream paper, navy ink, blue accent.
@@ -17,8 +18,12 @@ const W = 1024, H = 1443;
 const CREAM = '#ece4cf', INK = '#141d38', BLUE = '#2f6bff', SKY = '#8fb2ff';
 
 function start() {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+  // Phones have little memory per tab, and the canvas covers the whole (tall) hero: no MSAA on sharp screens
+  // (it multiplies the GPU memory and isn't visible at 2–3× pixels) and a lower pixel ratio. Otherwise the
+  // browser may kill and reload the tab when more of the page loads.
+  const dpr = devicePixelRatio || 1;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: dpr < 1.5, alpha: true, powerPreference: SMALL_SCREEN ? 'default' : 'high-performance' });
+  renderer.setPixelRatio(Math.min(dpr, SMALL_SCREEN ? 1.6 : 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
 
@@ -512,7 +517,7 @@ function start() {
 
 // ─────────────────────────────── Card artwork ───────────────────────────────
 // The artwork is drawn in W×H units onto a canvas FACE_SCALE times larger, so small type stays sharp on screen.
-const FACE_SCALE = 1.6;
+const FACE_SCALE = SMALL_SCREEN ? 1 : 1.6; // phones show the card ≤470px tall: the base size is already sharp there
 function makeFace(geometry, draw) {
   const c = document.createElement('canvas');
   c.width = Math.round(W * FACE_SCALE); c.height = Math.round(H * FACE_SCALE);
