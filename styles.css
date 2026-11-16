@@ -520,9 +520,9 @@ html.js:not(.is-loaded) { overflow: hidden; }
 
 /* ── Responsive ── */
 @media (max-width: 980px) {
-  .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; padding-top: 270px; gap: 8px; }
+  .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; padding-top: calc(var(--card-top, 310px) + 20px); gap: 8px; }
   /* Room for the card: it hangs from just under the navbar and is up to 430px tall. */
-  .hero__badge { height: calc(min(470px, 60svh, (100vw - 40px) * 1.12) + 10px); min-height: 0; order: -1; }
+  .hero__badge { height: calc(var(--card-px, min(470px, 60svh, (100vw - 40px) * 1.12)) + 10px); min-height: 0; order: -1; }
   .badge-hint { display: none; }
   .contact, .music { grid-template-columns: minmax(0, 1fr); }
   .intro { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
@@ -670,7 +670,7 @@ body { background: radial-gradient(120vw 80vh at 50% -10%, #0b1636 0%, transpare
    Keep in step with SHORT_LANDSCAPE / cardPx in lanyard.js. ── */
 @media (max-width: 980px) and (orientation: landscape) and (max-height: 560px) {
   .hero { grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); padding-top: 76px; gap: 12px; min-height: 0; align-items: start; }
-  .hero__badge { order: 0; height: calc(min(400px, 62svh) + 36svh - 40px); }
+  .hero__badge { order: 0; height: calc(var(--card-top, 38svh) + var(--card-px, 62svh) - 66px); }
   /* The navbar moves to the left so the strap (and the name on it) stays in view on the right. */
   .nav { left: 16px; translate: none; }
   .hero__text { gap: 16px; padding-top: 8px; }

@@ -226,6 +226,9 @@ function start() {
     hintEl.style.cssText = `left:${(hintOff.x + hintPos.x).toFixed(1)}px;top:${(hintOff.y + hintPos.y).toFixed(1)}px;right:auto;bottom:auto;transform:translateX(-50%);white-space:nowrap;${hintEl.style.opacity ? `opacity:${hintEl.style.opacity};` : ''}`;
   }
 
+  // strapTopY: world height of the top of the visible strap (set by layout). strapShift: the artwork's offset.
+  let strapTopY = 1e9, strapShift = null, underNav = false, canvasPageTop = 0;
+  const navForStrap = document.querySelector('.nav');
   function sync() {
     const tip = pts[SEGMENTS];
     up.subVectors(tip, bottom).normalize();
@@ -249,6 +252,24 @@ function start() {
     curvePts.push(leadIn, tip, tuckIn);
     curve.points = curvePts;
     curve.updateArcLengths(); // the points moved, so even spacing (and the artwork on it) needs fresh lengths
+    // Centre "AX Arianit Xhafa" in the stretch of strap that's on screen — from the top edge (or under the
+    // navbar on phones) down to the clamp — with the same space above the name as below it. The artwork is
+    // measured along the curve from its end (hidden 0.07 inside the clamp), so the lettering keeps its size.
+    const curveLen = curve.getLength();
+    if (!dragging || strapShift === null) {
+      // On phones the strap starts under the navbar: follow where it really is (it slides in after loading).
+      if (underNav && navForStrap) strapTopY = toWorld(0, navForStrap.getBoundingClientRect().bottom + 4 - canvasPageTop).y; // (as seen at the top of the page)
+      let vis = 0;
+      for (let i = 0; i <= 60; i++) {
+        curve.getPointAt(1 - i / 60, pnt);
+        if (pnt.y > strapTopY) break;
+        vis = (i / 60) * curveLen;
+      }
+      const shown = Math.max(0, vis - 0.07);
+      const text = strapTex.textFrac * STRAP_REPEAT;
+      const gap = Math.max(0.03, (shown - text) / 2);
+      const target = strapTex.nameEndFrac + (0.07 + gap) / STRAP_REPEAT;
+      strapShift = strapShift === null || Math.abs(target - strapShift) > 0.5 ? target : strapShift + (target - strapShift) * 0.08;    }
     for (let i = 0; i < SAMPLES; i++) {
       const t = i / (SAMPLES - 1);
       curve.getPointAt(t, pnt);
@@ -263,8 +284,8 @@ function start() {
       const o = i * 6;
       strapPos[o] = pnt.x - side.x; strapPos[o + 1] = pnt.y - side.y; strapPos[o + 2] = pnt.z - side.z;
       strapPos[o + 3] = pnt.x + side.x; strapPos[o + 4] = pnt.y + side.y; strapPos[o + 5] = pnt.z + side.z;
-      // The artwork is laid out from the clamp upwards and stretches with the strap.
-      const u = -((1 - t) * ropeLength) / STRAP_REPEAT;
+      // The artwork is laid out from the clamp upwards, at its true length, shifted so the name sits centred.
+      const u = strapShift - ((1 - t) * curveLen) / STRAP_REPEAT;
       strapUv[i * 4] = u; strapUv[i * 4 + 1] = 0; strapUv[i * 4 + 2] = u; strapUv[i * 4 + 3] = 1;
     }
     strapGeo.attributes.position.needsUpdate = true;
@@ -285,8 +306,17 @@ function start() {
     const short = matchMedia(SHORT_LANDSCAPE).matches;
     const stacked = matchMedia('(max-width: 980px)').matches && !short;
     const vh = innerHeight;
-    // Card + clamp height in px. Keep these in step with .hero__badge's height in styles.css.
-    const cardPx = short ? Math.min(400, vh * 0.62) : stacked ? Math.min(470, vh * 0.6, cw * 1.12) : Math.max(420, Math.min(vh * 0.64, 700));
+    // The strap above the card must be long enough to show the whole name: that length grows with the card
+    // (both scale with pxPerUnit), so it's a fixed share `k` of the card's own height.
+    // (name length + the part inside the clamp + a little room above and below it)
+    const k = (strapTex.textFrac * STRAP_REPEAT + 0.07 + 0.34) / (CARD_H + CLIP);
+    // Where the navbar ends once it has settled (offsets ignore its slide-in animation).
+    const navEl = document.querySelector('.nav');
+    const navBottom = stacked ? (navEl ? navEl.offsetTop + navEl.offsetHeight : 76) : 0;
+    // Card + clamp height in px. On short screens it shrinks so card, strap name and hint all fit.
+    const cardPx = short ? Math.min(400, (vh - 24) / (1 + k))
+      : stacked ? Math.min(470, vh * 0.6, cw * 1.12)
+      : Math.min(Math.max(420, Math.min(vh * 0.64, 700)), (vh - 48) / (1 + k));
     pxPerUnit = cardPx / (CARD_H + CLIP);
     halfH = ch / pxPerUnit / 2;
     halfW = halfH * camera.aspect;
@@ -296,9 +326,19 @@ function start() {
     const b = badge.getBoundingClientRect(), c = canvas.getBoundingClientRect();
     const ax = stacked ? cw / 2 : b.left - c.left + b.width * 0.5;
     toWorld(ax, -60, anchor);
-    // On phones the card hangs lower, so the name on the strap shows between the navbar and the clamp.
-    // How far below the top the card hangs: leaves enough strap above it for the whole "AX Arianit Xhafa".
-    const restTopPx = short ? Math.max(70, vh * 0.36) : stacked ? 250 : Math.max(140, vh * 0.27);
+    // How far below the top the card hangs: enough strap above it for the whole "AX Arianit Xhafa" (below the
+    // navbar on phones, where the strap runs behind it), never less than the old minimums.
+    const nameStrap = k * cardPx + 16;
+    const restTopPx = short ? Math.max(70, nameStrap) : stacked ? Math.max(250, navBottom + nameStrap) : Math.max(165, vh * 0.3, nameStrap);
+    // The page layout (phones: where the text starts) follows the card.
+    hero.style.setProperty('--card-top', `${Math.round(restTopPx)}px`);
+    // Top of the visible strap, in world units: the top of the screen, or just under the navbar on phones
+    // (where the strap runs behind it). Measured from the page top, as the card hangs at the top of the page.
+    canvasPageTop = c.top + scrollY;
+    underNav = stacked;
+    strapTopY = toWorld(0, (stacked ? navBottom + 4 : 0) - canvasPageTop).y;
+    strapShift = null;
+    hero.style.setProperty('--card-px', `${Math.round(cardPx)}px`);
     ropeLength = (restTopPx + 60) / pxPerUnit;
     segLen = ropeLength / SEGMENTS;
     // "Drag · click to flip" is placed under the card's real position (see placeHint), in badge coordinates.
@@ -463,6 +503,7 @@ function start() {
     front.redraw({ photo });
     back.redraw({ qr });
     strapTex.redraw();
+    layout(); // the real font changes the name's length on the strap, and with it where the card hangs
     renderer.render(scene, camera);
     document.dispatchEvent(new Event('lanyard:ready'));
     wake();
@@ -879,7 +920,8 @@ function drawBack(ctx, { qr } = {}) {
 function makeStrapTexture() {
   const c = document.createElement('canvas');
   // The right end of the canvas sits at the clamp, so the name is drawn there and shows just above the card.
-  c.width = 1024; c.height = 128;
+  // Wide artwork with the name at one end: the next repeat of the name is far up, never on screen.
+  c.width = 2048; c.height = 128;
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.wrapS = THREE.RepeatWrapping;
@@ -909,24 +951,28 @@ function makeStrapTexture() {
     }
     // Round mark
     ctx.strokeStyle = '#ffffff';
-    // Compact type: the whole name has to fit in the stretch of strap that shows above the card on every screen.
-    ctx.lineWidth = 6;
-    ctx.font = '800 56px "Inter", sans-serif';
-    ctx.letterSpacing = '4px';
-    const nameEnd = c.width - 30;
+    // Large type. The lettering sits at the right end of the artwork; the strap shifts it along (see sync) so
+    // it's centred in the visible strap. textFrac / nameEndFrac: its length and its clamp-side end, as shares
+    // of the artwork's width.
+    ctx.lineWidth = 7;
+    ctx.font = '800 68px "Inter", sans-serif';
+    ctx.letterSpacing = '5px';
+    const nameEnd = c.width - 24;
     const nameStart = nameEnd - ctx.measureText('Arianit Xhafa').width;
     ctx.letterSpacing = '0px';
-    const markX = nameStart - 50;
-    ctx.beginPath(); ctx.arc(markX, 64, 31, 0, Math.PI * 2); ctx.stroke();
+    const markR = 36, markX = nameStart - markR - 22;
+    tex.nameEndFrac = (nameEnd + 2) / c.width;
+    tex.textFrac = (nameEnd + 2 - (markX - markR - 4)) / c.width;
+    ctx.beginPath(); ctx.arc(markX, 64, markR, 0, Math.PI * 2); ctx.stroke();
     ctx.fillStyle = '#ffffff';
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'center';
-    ctx.font = '800 31px "Inter", sans-serif';
+    ctx.font = '800 36px "Inter", sans-serif';
     ctx.fillText('AX', markX, 66);
     // Name
     ctx.textAlign = 'left';
-    ctx.font = '800 56px "Inter", sans-serif';
-    ctx.letterSpacing = '4px';
+    ctx.font = '800 68px "Inter", sans-serif';
+    ctx.letterSpacing = '5px';
     ctx.fillText('Arianit Xhafa', nameStart, 68);
     ctx.letterSpacing = '0px';
     tex.needsUpdate = true;
