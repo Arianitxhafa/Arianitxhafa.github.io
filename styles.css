@@ -727,3 +727,30 @@ body { background: radial-gradient(120vw 80vh at 50% -10%, #0b1636 0%, transpare
   /* The border light runs only on the cards that are on screen (main.js adds .is-lit). */
   .stat.is-lit::before, .project.is-lit::before, .music.is-lit::before { display: block; animation: beam 7s linear infinite; }
 }
+
+/* ── Navbar on phones: clear space between the links, and a backdrop solid enough that the page behind
+   doesn't show through the words. Scales down step by step so it still fits a 320px screen. ── */
+@media (max-width: 760px) {
+  .nav { gap: 6px; padding: 6px; }
+  .nav .nav__links { gap: 6px; }
+  .nav__links a { padding: 11px 14px; font-size: 0.88rem; }
+  .nav__divider { display: none; }
+}
+@media (max-width: 420px) {
+  .nav .nav__links { gap: 4px; }
+  .nav__links a { padding: 10px 13px; font-size: 0.84rem; }
+  .nav__sound { width: 38px; height: 38px; }
+}
+@media (max-width: 370px) {
+  .nav { gap: 3px; padding: 5px; }
+  .nav .nav__links { gap: 3px; }
+  .nav__links a { padding: 9px 10px; font-size: 0.8rem; }
+  .nav__sound { width: 36px; height: 36px; }
+}
+@media (max-width: 340px) {
+  .nav .nav__links { gap: 2px; }
+  .nav__links a { padding: 9px 8px; font-size: 0.78rem; }
+}
+@media (max-width: 980px), (pointer: coarse) {
+  .nav { background: rgba(9, 12, 24, 0.86); }
+}
