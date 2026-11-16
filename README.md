@@ -1,28 +1,32 @@
 # Arianit Xhafa — Portfolio
 
-Personal portfolio built by hand with HTML, CSS and vanilla JavaScript, animated with GSAP + ScrollTrigger and Lenis smooth scrolling.
+Personal portfolio built by hand with HTML, CSS and vanilla JavaScript, plus three.js for the 3D ID card. No build step — GitHub Pages serves the files as they are.
 
 ## Features
-- Preloader with counter and curtain reveal
-- Interactive dot-field hero that reacts to the cursor
-- Letter-by-letter name reveal and rotating role line
-- Scroll-velocity marquee of the tech stack
-- Word-by-word highlighted about statement and typing terminal
-- Stacked, sticky project cards with 3D tilt and CSS-built mockups
-- Custom cursor, magnetic buttons, dark & light themes
-- Fully responsive and respects `prefers-reduced-motion`
+- Deep-space theme: a canvas starfield with twinkling stars, parallax and shooting stars
+- A 3D ID card hanging from a lanyard (three.js + a small verlet simulation): drag it on desktop, tap it on a phone
+- Floating glass navigation with a pill that follows the section in view
+- Typing role line, count-up stats, scroll reveals
+- Education timeline, certificates, tech stack and a Spotify playlist
+- Project cards with live screenshots and links, contact form that opens the visitor's email app
+- Fully responsive (320 px and up) and respects `prefers-reduced-motion`; a static card is shown without WebGL
+
+## Files
+- `index.html` — content
+- `styles.css` — design
+- `main.js` — starfield, navigation, reveals, typing, counters, contact form
+- `lanyard.js` — the 3D ID card (ES module; three.js from jsDelivr via an import map)
+- `cv.html` → `Arianit_Xhafa_CV.pdf` — the one-page CV
 
 ## Run locally
 ```bash
-npx http-server . -p 5173
+python -m http.server 5180
 ```
-
-## Deploy (GitHub Pages)
-1. Create a public repository named `Arianitxhafa.github.io`.
-2. Push the contents of this folder to the `main` branch.
-3. The site goes live at `https://arianitxhafa.github.io`.
-
-Live at **https://arianitxhafa.github.io**
+(Any static server works; opening `index.html` directly from disk won't load the ES modules.)
 
 ## Updating
-Add a new `<article class="project">` card inside `.stack` in `index.html`, update `cv.html`, regenerate `Arianit_Xhafa_CV.pdf`, then commit and push — GitHub Pages redeploys in about a minute.
+- **Photo on the ID card:** add `assets/photo.webp` (portrait, about 600×800) and set `data-photo="assets/photo.webp"` on the `.lanyard` canvas in `index.html`.
+- **Spotify:** replace the playlist ID in the `.music` iframe and link with your own playlist.
+- **New project:** copy an `<article class="project card">` block in `#projects`, add a screenshot in `assets/`, update `cv.html`, regenerate the PDF, then commit and push — GitHub Pages redeploys in about a minute.
+
+Live at **https://arianitxhafa.vercel.app**

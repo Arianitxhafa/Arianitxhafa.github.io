@@ -1,384 +1,633 @@
 <!doctype html>
-<html lang="en" class="no-js" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
+  <!-- The site moved to arianitxhafa.vercel.app: visitors of the old github.io address are sent there (same page and section) -->
+  <script>if (/\.github\.io$/i.test(location.hostname)) location.replace('https://arianitxhafa.vercel.app' + location.pathname.replace(/\/index\.html$/, '/') + location.search + location.hash);</script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Arianit Xhafa — Software Engineer</title>
-  <meta name="description" content="Arianit Xhafa — Computer Science & Engineering student building mobile apps and full-stack web products. Open to internships and junior roles." />
-  <meta property="og:title" content="Arianit Xhafa — Software Engineer" />
-  <meta property="og:description" content="Mobile apps, full-stack web and databases. Open to internships and junior roles." />
+  <title>Arianit Xhafa — Software Developer</title>
+  <meta name="description" content="Arianit Xhafa — final-year Computer Science & Engineering student building full-stack web products and mobile apps. Open to internships and junior roles." />
+  <meta property="og:title" content="Arianit Xhafa — Software Developer" />
+  <meta property="og:description" content="Full-stack web and mobile apps: Faturo, CareerPilot, Rentigo and TrimTime. Open to internships and junior roles." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://arianitxhafa.github.io/" />
-  <meta property="og:image" content="https://arianitxhafa.github.io/og.png" />
+  <meta property="og:url" content="https://arianitxhafa.vercel.app/" />
+  <meta property="og:image" content="https://arianitxhafa.vercel.app/og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://arianitxhafa.github.io/og.png" />
-  <link rel="canonical" href="https://arianitxhafa.github.io/" />
-  <meta name="theme-color" content="#0a0a0b" />
+  <meta name="twitter:image" content="https://arianitxhafa.vercel.app/og.png" />
+  <link rel="canonical" href="https://arianitxhafa.vercel.app/" />
+  <meta name="theme-color" content="#050816" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  <script>
-    document.documentElement.classList.remove('no-js');
-    try { const t = localStorage.getItem('ax-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20261116j" />
+  <script>document.documentElement.classList.add('js');</script>
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    } }
   </script>
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
-
-  <!-- Preloader -->
-  <div class="loader" aria-hidden="true">
-    <div class="loader__top">
-      <span>Arianit Xhafa</span>
-      <span>Portfolio ©2026</span>
+  <!-- Loading screen: counts up while fonts, images and the 3D card load (hidden without JavaScript) -->
+  <div class="loader" role="progressbar" aria-label="Loading the portfolio" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="loader__inner">
+      <p class="loader__num"><span>0</span><sup>%</sup></p>
+      <div class="loader__bar"><i></i></div>
+      <p class="loader__label mono">Loading assets…</p>
     </div>
-    <div class="loader__count"><span class="loader__num">0</span><sup>%</sup></div>
-    <div class="loader__bar"><i></i></div>
   </div>
 
-  <!-- Cursor -->
-  <div class="cursor" aria-hidden="true"><div class="cursor__ring"><span class="cursor__label"></span></div><div class="cursor__dot"></div></div>
-  <div class="progress" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <canvas class="sky" aria-hidden="true"></canvas>
+  <div class="nebula" aria-hidden="true"></div>
 
+  <!-- Floating glass navigation -->
   <header class="nav">
-    <a href="#top" class="nav__logo" data-magnetic aria-label="Back to top">
-      <svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true"><rect x="1" y="1" width="38" height="38" rx="11" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 29 L16.5 11 L23 29 M12.6 22.5 H20.4 M24 11 L31 29 M31 11 L24 29" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
     <nav class="nav__links" aria-label="Primary">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#services">Stack</a>
-      <a href="#contact">Contact</a>
+      <span class="nav__pill" aria-hidden="true"></span>
+      <a href="#home" data-nav>Home</a>
+      <a href="#about" data-nav>About</a>
+      <a href="#portfolio" data-nav>Portfolio</a>
+      <a href="#contact" data-nav>Contact</a>
     </nav>
-    <div class="nav__right">
-      <span class="status"><i></i>Open to work</span>
-      <a class="cv-btn" href="Arianit_Xhafa_CV.pdf" download data-magnetic>CV <span>↓</span></a>
-      <button class="theme" type="button" aria-label="Toggle color theme" data-magnetic>
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor"/><path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
-    </div>
+    <span class="nav__divider" aria-hidden="true"></span>
+    <button class="nav__sound" type="button" aria-pressed="true" aria-label="Click sounds on" title="Click sounds">
+      <svg class="ico-on" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.6 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <svg class="ico-off" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/><path d="m16.5 9.5 5 5m0-5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
   </header>
 
   <main id="main">
     <!-- HERO -->
-    <section class="hero" id="top">
-      <canvas class="hero__field" aria-hidden="true"></canvas>
-      <div class="hero__inner">
-        <p class="hero__eyebrow" data-hero-fade><span class="pulse"></span>Computer Science &amp; Engineering · Final year</p>
-        <h1 class="hero__name" aria-label="Arianit Xhafa">
-          <span class="line"><span class="split" data-split>Arianit</span></span>
-          <span class="line line--serif"><span class="split" data-split>Xhafa</span><span class="hero__badge" data-hero-fade>
-            <svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="circ" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs><text><textPath href="#circ">MOBILE · WEB · DATABASES · MOBILE · WEB · DATABASES ·</textPath></text></svg>
-            <span>↓</span>
-          </span></span>
+    <section class="hero" id="home">
+      <!-- 3D ID card on an elastic lanyard (three.js). It covers the hero but ignores the pointer except on the card. -->
+      <canvas class="lanyard" data-photo="assets/me.webp" data-qr="assets/qr-linkedin.png" aria-label="3D ID card for Arianit Xhafa hanging from a lanyard — drag it to swing it, click or tap it to flip it"></canvas>
+      <div class="hero__text">
+        <p class="chip" data-reveal><span class="chip__dot"></span>Open to internships &amp; junior roles</p>
+        <h1 class="hero__title" data-reveal>
+          <span class="gradient">Welcome to</span>
+          <span class="hero__title-2">My Portfolio</span>
         </h1>
-        <div class="hero__role" data-hero-fade>
-          <span>I build</span>
-          <span class="rotator" aria-live="polite">
-            <span class="is-active">mobile apps people actually use.</span>
-            <span>full-stack web products.</span>
-            <span>fast, secure backends.</span>
-            <span>interfaces with motion &amp; care.</span>
-          </span>
+        <p class="hero__name" data-reveal>I'm <b>Arianit Xhafa</b> — CS &amp; Engineering student from Kosovo.</p>
+        <p class="hero__role" data-reveal aria-live="polite">
+          <span class="mono">&gt;</span> <span class="typer" data-words="Full-stack developer|Mobile app developer|Next.js · Supabase · Postgres|CS &amp; Engineering student">Full-stack developer</span><span class="typer__caret" aria-hidden="true"></span>
+        </p>
+        <p class="hero__lead" data-reveal>
+          I turn everyday problems into real products — from an invoicing SaaS and a job-search co-pilot to a car rental
+          platform and a barbershop booking app. I care about the whole thing: the database, the API and the last pixel.
+        </p>
+        <div class="hero__ctas" data-reveal>
+          <a class="btn btn--primary" href="#portfolio">View projects
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="#contact">Get in touch
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m4 12 16-8-6 16-2.5-6.5L4 12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </a>
         </div>
-        <div class="hero__foot" data-hero-fade>
-          <p>Based in Mitrovica, Kosovo — open to remote &amp; on-site roles.</p>
-          <a href="#work" class="scrollcue" data-magnetic>Scroll to explore <span class="scrollcue__line"></span></a>
-          <p class="clock">Local time <b class="clock__time">--:--</b></p>
+        <div class="hero__find" data-reveal>
+          <span class="mono label">Find me</span>
+          <a class="icon-btn" href="https://github.com/Arianitxhafa" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+          </a>
+          <a class="icon-btn" href="https://www.linkedin.com/in/arianit-xhafa-910228408" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4V21H3V9.75Zm6.5 0h3.8v1.54h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.07c0-1.21-.02-2.77-1.69-2.77-1.69 0-1.95 1.32-1.95 2.68V21h-4V9.75Z"/></svg>
+          </a>
+          <a class="icon-btn" href="mailto:arianitxhafa95@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </div>
-    </section>
 
-    <!-- MARQUEE -->
-    <section class="marquee" aria-label="Technologies I work with">
-      <div class="marquee__track">
-        <div class="marquee__group">
-          <span>React Native</span><em>✦</em><span>TypeScript</span><em>✦</em><span>Expo</span><em>✦</em><span>Node.js</span><em>✦</em><span>Next.js</span><em>✦</em><span>Supabase</span><em>✦</em><span>PostgreSQL</span><em>✦</em><span>SQLite</span><em>✦</em><span>Java</span><em>✦</em><span>C#</span><em>✦</em><span>Git</span><em>✦</em>
+      <!-- 3D lanyard ID card (three.js); the static card underneath is the fallback without WebGL -->
+      <div class="hero__badge" data-reveal>
+        <div class="badge-fallback" aria-hidden="true">
+          <div class="badge-fallback__strap"></div>
+          <div class="badge-fallback__card">
+            <span class="mono">DEVELOPER</span>
+            <b>AX</b>
+            <span>Arianit Xhafa</span>
+          </div>
         </div>
-        <div class="marquee__group" aria-hidden="true">
-          <span>React Native</span><em>✦</em><span>TypeScript</span><em>✦</em><span>Expo</span><em>✦</em><span>Node.js</span><em>✦</em><span>Next.js</span><em>✦</em><span>Supabase</span><em>✦</em><span>PostgreSQL</span><em>✦</em><span>SQLite</span><em>✦</em><span>Java</span><em>✦</em><span>C#</span><em>✦</em><span>Git</span><em>✦</em>
-        </div>
+        <p class="badge-hint mono" aria-hidden="true">Drag · click to flip ↻</p>
       </div>
     </section>
 
     <!-- ABOUT -->
-    <section class="about" id="about">
-      <div class="section-head">
-        <span class="section-head__num">(01)</span>
-        <span class="section-head__label">About</span>
-      </div>
-      <p class="about__statement" data-words>
-        I'm Arianit — a final-year Computer Science &amp; Engineering student who likes turning real, everyday problems into <em>products</em>. From a booking app for barbershops across Kosovo to a full-stack car rental platform, I care about the whole thing: the database, the API, and the last pixel of the interface.
-      </p>
-      <div class="about__grid">
-        <div class="stats">
-          <div class="stat" data-reveal><b data-count="25" data-suffix="+">0</b><span>features shipped in TrimTime</span></div>
-          <div class="stat" data-reveal><b data-count="379">0</b><span>barbershops mapped across Kosovo</span></div>
-          <div class="stat" data-reveal><b data-count="3">0</b><span>certifications — Java, WordPress, Photoshop</span></div>
-          <div class="stat" data-reveal><b data-count="3">0</b><span>products live on the web — Rentigo, CareerPilot, Faturo</span></div>
+    <section class="section" id="about">
+      <header class="section__head section__head--center" data-reveal>
+        <p class="eyebrow">About me</p>
+        <h2 class="section__title">Building things <span class="gradient">people use.</span></h2>
+      </header>
+
+      <div class="intro">
+        <div class="intro__name" data-reveal>
+          <p class="intro__hi">Hi, I'm</p>
+          <p class="intro__big">Arianit<br /><span class="gradient">Xhafa</span></p>
+          <p class="intro__tag mono">CS &amp; Engineering · UMIB '27</p>
+          <a class="btn btn--primary" href="#contact">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            Get in touch
+          </a>
         </div>
-        <div class="terminal" data-reveal>
-          <div class="terminal__bar"><i></i><i></i><i></i><span>~/arianit — zsh</span></div>
-          <pre class="terminal__body" aria-label="Terminal summary"><code></code><span class="caret">▍</span></pre>
+
+        <figure class="intro__photo" data-reveal>
+          <div class="intro__ring" aria-hidden="true"></div>
+          <span class="intro__pic">
+            <img src="assets/me.webp" srcset="assets/me-560.webp 560w, assets/me.webp 864w" sizes="(max-width: 760px) 70vw, 380px" alt="Arianit Xhafa at the JunctionX hackathon in Prizren, wearing the event T-shirt and lanyard" width="864" height="1600" loading="lazy" />
+            <!-- Hologram scanner: the pointer reveals a holographic version of the photo; a click sends a ripple -->
+            <canvas class="intro__reveal" data-src="assets/me-holo.webp" aria-hidden="true"></canvas>
+          </span>
+        </figure>
+
+        <div class="intro__text" data-reveal>
+          <p>
+            I'm a final-year <b>Computer Science &amp; Engineering</b> student at the University of Mitrovica
+            "Isa Boletini". I learn best by shipping: every project here is live or in active development, built end
+            to end — schema, API, interface and deployment.
+          </p>
+          <p>
+            I work mostly with <b>Next.js, TypeScript and Postgres</b> on the web and <b>React Native</b> on mobile,
+            with a focus on security, tests and interfaces that feel just as good on a phone.
+          </p>
+          <ul class="facts">
+            <li><span>Languages</span><b>Albanian · English (B2) · French (A1)</b></li>
+            <li><span>Looking for</span><b>Internship / junior role</b></li>
+          </ul>
+          <a class="btn btn--ghost" href="#portfolio">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m8 8-4 4 4 4m8-8 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            View my work
+          </a>
+        </div>
+      </div>
+
+      <!-- Education & experience: simple cards with a logo, the name, a subtitle and the years -->
+      <div class="edu">
+        <div class="edu__col">
+          <h3 class="sub-title" data-reveal>Education</h3>
+          <article class="school card" data-reveal>
+            <span class="school__logo"><img src="assets/logos/umib.webp" alt="University of Mitrovica &quot;Isa Boletini&quot; logo" width="192" height="192" loading="lazy" /></span>
+            <div class="school__text">
+              <h4>University of Mitrovica "Isa Boletini"</h4>
+              <p>BSc Computer Science &amp; Engineering</p>
+              <span class="school__years">2024 – Present</span>
+            </div>
+          </article>
+          <article class="school card" data-reveal>
+            <span class="school__logo"><img src="assets/logos/frang-bardhi.webp" alt="&quot;Frang Bardhi&quot; Gymnasium logo" width="192" height="192" loading="lazy" /></span>
+            <div class="school__text">
+              <h4>"Frang Bardhi" Gymnasium, Mitrovica</h4>
+              <p>Natural Sciences · GPA 4.88</p>
+              <span class="school__years">2021 – 2024</span>
+            </div>
+          </article>
+        </div>
+        <div class="edu__col">
+          <h3 class="sub-title" data-reveal>Experience</h3>
+          <article class="school card" data-reveal>
+            <span class="school__logo school__logo--ring"><img src="assets/logos/trimtime.webp" alt="TrimTime app logo" width="192" height="192" loading="lazy" /></span>
+            <div class="school__text">
+              <h4>TrimTime</h4>
+              <p>Lead developer · team project</p>
+              <span class="school__years">2026</span>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="stats">
+        <article class="stat card" data-reveal>
+          <span class="stat__icon"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="m8 8-4 4 4 4m8-8 4 4-4 4m-2.5-11-3 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <b class="stat__num" data-count="4">4</b>
+          <span class="stat__label">Projects</span>
+          <span class="stat__sub">Web &amp; mobile, end to end</span>
+        </article>
+        <article class="stat card" data-reveal>
+          <span class="stat__icon"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="9" r="5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m9 13.5-1.5 7.5 4.5-2.5 4.5 2.5-1.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+          <b class="stat__num" data-count="4">4</b>
+          <span class="stat__label">Certificates</span>
+          <span class="stat__sub">Java · Web design · AI · ICT</span>
+        </article>
+        <article class="stat card" data-reveal>
+          <span class="stat__icon"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M7 4h10v4a5 5 0 0 1-10 0V4Zm0 2H4v1a4 4 0 0 0 4 4m9-5h3v1a4 4 0 0 1-4 4m-4 3v3m-4 4h8l-1-4H9l-1 4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span>
+          <b class="stat__num" data-count="2">2</b>
+          <span class="stat__label">Events</span>
+          <span class="stat__sub">Hackathon · Student conference</span>
+        </article>
+        <article class="stat card" data-reveal>
+          <span class="stat__icon"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          <b class="stat__num" data-count="23">23</b>
+          <span class="stat__label">Technologies</span>
+          <span class="stat__sub">Languages, frameworks &amp; tools</span>
+        </article>
+      </div>
+
+      <!-- Music -->
+      <div class="music card" data-reveal>
+        <div class="music__text">
+          <h3 class="music__title">Headphones on.<br /><span class="gradient">Problems solved.</span></h3>
+          <p>Most of these projects were built with a playlist running in the background. Here's what's on rotation while I code.</p>
+          <a class="btn btn--ghost btn--sm" href="https://open.spotify.com/playlist/37i9dQZF1DWZeKCadgRdKQ" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+            Open in Spotify
+          </a>
+        </div>
+        <!-- A light placeholder; Spotify's player (≈2 MB, cookies, dozens of tab stops) loads only when asked for -->
+        <div class="music__player">
+          <button class="music__facade" type="button" data-embed="https://open.spotify.com/embed/playlist/37i9dQZF1DWZeKCadgRdKQ?utm_source=generator&amp;theme=0">
+            <span class="music__eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="music__label mono">Coding soundtrack</span>
+            <span class="music__name">Deep Focus</span>
+            <span class="music__play" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
+            <span class="music__cta">Load the Spotify player</span>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- WORK -->
-    <section class="work" id="work">
-      <div class="section-head">
-        <span class="section-head__num">(02)</span>
-        <span class="section-head__label">Selected work</span>
+    <!-- PORTFOLIO -->
+    <section class="section" id="portfolio">
+      <header class="section__head section__head--center" data-reveal>
+        <p class="eyebrow">Portfolio</p>
+        <h2 class="section__title">My <span class="gradient">work.</span></h2>
+        <p class="section__lead">Projects I've built, what I've learned along the way and the tools I use every day.</p>
+      </header>
+
+      <div class="tabs" role="tablist" aria-label="Portfolio" data-reveal>
+        <span class="tabs__pill" aria-hidden="true"></span>
+        <button class="tab" role="tab" id="tab-projects" aria-controls="panel-projects" aria-selected="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m8 8-4 4 4 4m8-8 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Projects</span>
+        </button>
+        <button class="tab" role="tab" id="tab-certificates" aria-controls="panel-certificates" aria-selected="false" tabindex="-1">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="9" r="5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m9 13.5-1.5 7.5 4.5-2.5 4.5 2.5-1.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          <span>Certificates</span>
+        </button>
+        <button class="tab" role="tab" id="tab-achievements" aria-controls="panel-achievements" aria-selected="false" tabindex="-1">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 4h10v4a5 5 0 0 1-10 0V4Zm0 2H4v1a4 4 0 0 0 4 4m9-5h3v1a4 4 0 0 1-4 4m-4 3v3m-4 4h8l-1-4H9l-1 4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span>Achievements</span>
+        </button>
+        <button class="tab" role="tab" id="tab-stack" aria-controls="panel-stack" aria-selected="false" tabindex="-1">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="9.5" y="9.5" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 3v3m6-3v3M9 18v3m6-3v3M3 9h3m-3 6h3m12-6h3m-3 6h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <span>Tech Stack</span>
+        </button>
       </div>
-      <h2 class="big-title"><span class="split-words" data-reveal-title>Things I've</span> <span class="split-words serif" data-reveal-title>built.</span></h2>
 
-      <div class="stack">
-        <!-- TrimTime -->
-        <article class="project" style="--accent:#D4A853; --i:0" data-cursor="Explore">
-          <div class="project__info">
-            <div class="project__meta"><span>01</span><span>Mobile app · Lead developer · In development</span><span>2026</span></div>
-            <h3 class="project__title">TrimTime</h3>
-            <p class="project__tag">Barbershop booking — end to end.</p>
-            <p class="project__desc">A two-sided mobile platform: clients discover nearby barbershops and book in seconds, while owners run their entire day — calendar, staff, clients and analytics — from one app. Built in a team of two, where I developed the large majority of the app.</p>
-            <ul class="project__points">
-              <li>Real-time bookings with server-side pricing and database-level protection against double bookings</li>
-              <li>379 shops in 31 cities imported from OpenStreetMap, ranked by GPS distance</li>
-              <li>Client &amp; business roles, Row Level Security, Albanian/English, dark &amp; light themes</li>
-            </ul>
-            <ul class="chips"><li>React Native</li><li>Expo</li><li>TypeScript</li><li>Supabase</li><li>PostgreSQL</li></ul>
-            <div class="project__links">
-              <a class="btn" href="https://github.com/Arianitxhafa/TrimTime" target="_blank" rel="noopener" data-magnetic>View code <span>↗</span></a>
-            </div>
-          </div>
-          <div class="project__visual" data-tilt>
-            <div class="glow"></div>
-            <div class="phone phone--left"><img src="assets/trimtime/map.webp" alt="TrimTime map of barbershops near the user" loading="lazy" width="560" height="1133" /></div>
-            <div class="phone phone--right"><img src="assets/trimtime/role.webp" alt="TrimTime role selection: client or barber" loading="lazy" width="560" height="1133" /></div>
-            <div class="phone phone--front"><div class="phone__notch"></div><img src="assets/trimtime/discover.webp" alt="TrimTime discover screen listing barbershops in Prishtina" loading="lazy" width="560" height="1133" /></div>
-          </div>
-        </article>
-
-        <!-- Rentigo -->
-        <article class="project" style="--accent:#4F7CFF; --i:1" data-cursor="Explore">
-          <div class="project__info">
-            <div class="project__meta"><span>02</span><span>Full-stack web app</span><span>2026</span></div>
-            <h3 class="project__title">Rentigo</h3>
-            <p class="project__tag">Car rental, full stack — no frameworks.</p>
-            <p class="project__desc">A complete car rental platform built from first principles: a hand-written Node.js API running as a Vercel function, serverless PostgreSQL on Neon and a responsive multi-page frontend with an integrated admin panel.</p>
-            <ul class="project__points">
-              <li>Live fleet catalogue with search, category, location and status filters</li>
-              <li>Accounts, bookings and leads in Postgres; database-backed sessions and race-free bookings</li>
-              <li>Protected admin dashboard with statistics, bookings, leads and fleet management</li>
-            </ul>
-            <ul class="chips"><li>Node.js</li><li>PostgreSQL (Neon)</li><li>JavaScript</li><li>REST API</li><li>Vercel</li></ul>
-            <div class="project__links">
-              <a class="btn" href="https://github.com/Arianitxhafa/Rentigo" target="_blank" rel="noopener" data-magnetic>View code <span>↗</span></a>
-              <a class="btn btn--ghost" href="https://rentigo-rose.vercel.app/" target="_blank" rel="noopener" data-magnetic>Live demo <span>↗</span></a>
-            </div>
-          </div>
-          <div class="project__visual" data-tilt>
-            <div class="glow"></div>
-            <div class="browser">
-              <div class="browser__bar"><i></i><i></i><i></i><span>rentigo-rose.vercel.app</span></div>
-              <div class="browser__body">
-                <div class="rg-nav"><b>RENTIGO</b><span>Fleet</span><span>Booking</span><span>About</span><em>Sign in</em></div>
-                <div class="rg-hero">
-                  <h4>Drive the <i>moment.</i></h4>
-                  <div class="rg-search"><span>Prishtina</span><span>12 Nov</span><span>15 Nov</span><b>Search</b></div>
-                </div>
-                <div class="rg-cars">
-                  <div class="rg-car"><div class="rg-img"><svg viewBox="0 0 120 50" aria-hidden="true"><path d="M8 36 Q10 26 24 24 L40 14 Q48 10 62 10 L80 11 Q90 12 98 22 L110 25 Q116 27 116 36 Z" fill="currentColor"/><circle cx="32" cy="38" r="8" fill="#0d1020" stroke="currentColor" stroke-width="3"/><circle cx="92" cy="38" r="8" fill="#0d1020" stroke="currentColor" stroke-width="3"/></svg></div><b>Compact</b><small>€35/day</small></div>
-                  <div class="rg-car"><div class="rg-img"><svg viewBox="0 0 120 50" aria-hidden="true"><path d="M6 36 Q8 24 22 22 L36 12 Q46 8 64 8 L82 9 Q94 10 102 20 L112 24 Q117 27 117 36 Z" fill="currentColor"/><circle cx="31" cy="38" r="8" fill="#0d1020" stroke="currentColor" stroke-width="3"/><circle cx="93" cy="38" r="8" fill="#0d1020" stroke="currentColor" stroke-width="3"/></svg></div><b>SUV</b><small>€55/day</small></div>
-                  <div class="rg-car"><div class="rg-img"><svg viewBox="0 0 120 50" aria-hidden="true"><path d="M6 36 Q8 28 20 26 L42 16 Q52 13 66 13 L84 14 Q96 16 104 24 L114 27 Q118 30 117 36 Z" fill="currentColor"/><circle cx="31" cy="38" r="8" fill="#0d1020" stroke="currentColor" stroke-width="3"/><circle cx="93" cy="38" r="8" fill="#0d1020" stroke="currentColor" stroke-width="3"/></svg></div><b>Premium</b><small>€80/day</small></div>
-                </div>
+      <!-- Projects -->
+      <div class="panel" role="tabpanel" id="panel-projects" aria-labelledby="tab-projects">
+        <div class="projects">
+          <article class="project card">
+            <button class="project__shot" type="button" data-details="faturo" aria-label="Faturo — details">
+              <img src="assets/faturo/dashboard.webp" alt="" loading="lazy" width="1400" height="875" />
+            </button>
+            <div class="project__body">
+              <p class="project__meta mono"><span>01</span> Multi-tenant SaaS · 2026 <span class="live">Live</span></p>
+              <h3>Faturo</h3>
+              <p class="project__tag">Invoices that look sharp — and get paid on time.</p>
+              <p>An invoicing SaaS for freelancers and small businesses: VAT and PDFs, a revenue dashboard, teams with roles, Free/Pro billing and public invoice links.</p>
+              <ul class="tags"><li>Next.js 16</li><li>TypeScript</li><li>Postgres (Neon)</li><li>Drizzle</li><li>Auth.js</li></ul>
+              <div class="project__links">
+                <button class="btn btn--primary btn--sm" type="button" data-details="faturo">Details <span aria-hidden="true">→</span></button>
+                <a class="btn btn--ghost btn--sm" href="https://faturo-two.vercel.app/" target="_blank" rel="noopener">Live demo ↗</a>
+                <a class="btn btn--ghost btn--sm" href="https://github.com/Arianitxhafa/faturo" target="_blank" rel="noopener">Code ↗</a>
               </div>
             </div>
-            <div class="admin-card">
-              <small>Admin · today</small>
-              <div><b>12</b><span>new bookings</span></div>
-              <div class="spark"><i style="--h:30%"></i><i style="--h:55%"></i><i style="--h:42%"></i><i style="--h:70%"></i><i style="--h:90%"></i></div>
-            </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- CareerPilot -->
-        <article class="project" style="--accent:#FFB547; --i:2" data-cursor="Explore">
-          <div class="project__info">
-            <div class="project__meta"><span>03</span><span>Full-stack web app · CV tools · PWA</span><span>2026</span></div>
-            <h3 class="project__title">CareerPilot</h3>
-            <p class="project__tag">Your job search, under control.</p>
-            <p class="project__desc">A job-search co-pilot for students: paste a job link and it's on your Kanban board, scored against your CV, with interviews and follow-ups on a calendar — in English and Albanian, installable on your phone.</p>
-            <ul class="project__points">
-              <li>Import a job from its link — JobPosting data read behind an SSRF-guarded server fetch — then match it to your CV</li>
-              <li>CV tools: in-browser PDF import, match scores across every job, the skills worth learning next and cover-letter templates</li>
-              <li>Calendar with .ics export, insights (funnel, weekly goal), CSV export — all behind Postgres Row Level Security</li>
-            </ul>
-            <ul class="chips"><li>Next.js 16</li><li>TypeScript</li><li>Supabase</li><li>Tailwind CSS</li><li>PWA</li><li>Unit tests</li></ul>
-            <div class="project__links">
-              <a class="btn" href="https://github.com/Arianitxhafa/career-pilot" target="_blank" rel="noopener" data-magnetic>View code <span>↗</span></a>
-              <a class="btn btn--ghost" href="https://career-pilot-weld-six.vercel.app/" target="_blank" rel="noopener" data-magnetic>Live demo <span>↗</span></a>
+          <article class="project card">
+            <button class="project__shot" type="button" data-details="careerpilot" aria-label="CareerPilot — details">
+              <img src="assets/careerpilot/dashboard.webp" alt="" loading="lazy" width="1400" height="875" />
+            </button>
+            <div class="project__body">
+              <p class="project__meta mono"><span>02</span> Web app · CV tools · PWA · 2026 <span class="live">Live</span></p>
+              <h3>CareerPilot</h3>
+              <p class="project__tag">Your job search, under control.</p>
+              <p>Paste a job link and it's on your Kanban board, scored against your CV — with interviews on a calendar, insights and cover-letter templates. Installable on your phone.</p>
+              <ul class="tags"><li>Next.js 16</li><li>TypeScript</li><li>Supabase</li><li>Tailwind</li><li>PWA</li></ul>
+              <div class="project__links">
+                <button class="btn btn--primary btn--sm" type="button" data-details="careerpilot">Details <span aria-hidden="true">→</span></button>
+                <a class="btn btn--ghost btn--sm" href="https://career-pilot-weld-six.vercel.app/" target="_blank" rel="noopener">Live demo ↗</a>
+                <a class="btn btn--ghost btn--sm" href="https://github.com/Arianitxhafa/career-pilot" target="_blank" rel="noopener">Code ↗</a>
+              </div>
             </div>
-          </div>
-          <div class="project__visual" data-tilt>
-            <div class="glow"></div>
-            <figure class="shot">
-              <div class="shot__bar"><i></i><i></i><i></i><span>career-pilot-weld-six.vercel.app</span></div>
-              <img src="assets/careerpilot/dashboard.webp" alt="CareerPilot dashboard: flight-status sidebar, stats, this week's interviews and follow-ups, and a Kanban board of job applications" loading="lazy" width="1400" height="875" />
-            </figure>
-            <figure class="float-card"><span class="float-card__label">◎ Job match</span><img src="assets/careerpilot/match.webp" alt="CareerPilot Job match: jobs ranked by CV match score (83 and 62) with the skills each one is missing" loading="lazy" width="796" height="282" /></figure>
-          </div>
-        </article>
-        <!-- Faturo -->
-        <article class="project" style="--accent:#34D3B4; --i:3" data-cursor="Explore">
-          <div class="project__info">
-            <div class="project__meta"><span>04</span><span>Multi-tenant SaaS · Teams · Billing</span><span>2026</span></div>
-            <h3 class="project__title">Faturo</h3>
-            <p class="project__tag">Invoices that look sharp — and get paid on time.</p>
-            <p class="project__desc">A complete invoicing SaaS for freelancers and small businesses in Kosovo: invoices with VAT and PDFs, a revenue dashboard, teams with roles, Free/Pro subscriptions and public links for clients. Try it with one click — no sign-up.</p>
-            <ul class="project__points">
-              <li>Teams: single-use hashed invite links, owner / admin / member roles, an activity log and login rate limiting</li>
-              <li>Subscription billing — Free/Pro limits, checkout, renewals and cancellations — behind a provider interface</li>
-              <li>Public invoice links with view tracking, PDF and formula-safe CSV export; money kept in integer cents</li>
-            </ul>
-            <ul class="chips"><li>Next.js 16</li><li>TypeScript</li><li>Postgres (Neon)</li><li>Drizzle ORM</li><li>Auth.js</li><li>E2E tests</li></ul>
-            <div class="project__links">
-              <a class="btn" href="https://github.com/Arianitxhafa/faturo" target="_blank" rel="noopener" data-magnetic>View code <span>↗</span></a>
-              <a class="btn btn--ghost" href="https://faturo-two.vercel.app/" target="_blank" rel="noopener" data-magnetic>Try the live demo <span>↗</span></a>
+          </article>
+
+          <article class="project card">
+            <button class="project__shot" type="button" data-details="rentigo" aria-label="Rentigo — details">
+              <img src="assets/rentigo/home.webp" alt="" loading="lazy" width="1400" height="875" />
+            </button>
+            <div class="project__body">
+              <p class="project__meta mono"><span>03</span> Full-stack web app · 2026 <span class="live">Live</span></p>
+              <h3>Rentigo</h3>
+              <p class="project__tag">Car rental, full stack — no frameworks.</p>
+              <p>A hand-written Node.js API on Vercel with serverless Postgres: live fleet search, accounts, race-free bookings and an admin dashboard. Albanian &amp; English.</p>
+              <ul class="tags"><li>Node.js</li><li>PostgreSQL (Neon)</li><li>JavaScript</li><li>REST API</li></ul>
+              <div class="project__links">
+                <button class="btn btn--primary btn--sm" type="button" data-details="rentigo">Details <span aria-hidden="true">→</span></button>
+                <a class="btn btn--ghost btn--sm" href="https://rentigo-rose.vercel.app/" target="_blank" rel="noopener">Live demo ↗</a>
+                <a class="btn btn--ghost btn--sm" href="https://github.com/Arianitxhafa/Rentigo" target="_blank" rel="noopener">Code ↗</a>
+              </div>
             </div>
-          </div>
-          <div class="project__visual" data-tilt>
-            <div class="glow"></div>
-            <figure class="shot">
-              <div class="shot__bar"><i></i><i></i><i></i><span>faturo-two.vercel.app</span></div>
-              <img src="assets/faturo/dashboard.webp" alt="Faturo dashboard with revenue, unpaid and overdue totals and a 12-month revenue chart" loading="lazy" width="1400" height="875" />
-            </figure>
-            <figure class="float-card float-card--faturo"><span class="float-card__label">🧾 Paid</span><img src="assets/faturo/paid.webp" alt="Faturo invoice totals with a green PAID rubber stamp" loading="lazy" width="896" height="275" /></figure>
-          </div>
-        </article>
+          </article>
+
+          <article class="project card">
+            <button class="project__shot project__shot--phones" type="button" data-details="trimtime" aria-label="TrimTime — details">
+              <img class="ph ph--l" src="assets/trimtime/map.webp" alt="" loading="lazy" width="560" height="1133" />
+              <img class="ph ph--c" src="assets/trimtime/discover.webp" alt="" loading="lazy" width="560" height="1133" />
+              <img class="ph ph--r" src="assets/trimtime/role.webp" alt="" loading="lazy" width="560" height="1133" />
+            </button>
+            <div class="project__body">
+              <p class="project__meta mono"><span>04</span> Mobile app · Lead developer <span class="wip">In development</span></p>
+              <h3>TrimTime</h3>
+              <p class="project__tag">Barbershop booking — end to end.</p>
+              <p>Clients find nearby barbershops and book in seconds; owners run calendar, staff, clients and analytics. 379 shops imported from OpenStreetMap. Built in a team of two.</p>
+              <ul class="tags"><li>React Native</li><li>Expo</li><li>TypeScript</li><li>Supabase</li></ul>
+              <div class="project__links">
+                <button class="btn btn--primary btn--sm" type="button" data-details="trimtime">Details <span aria-hidden="true">→</span></button>
+                <a class="btn btn--ghost btn--sm" href="https://github.com/Arianitxhafa/TrimTime" target="_blank" rel="noopener">Code ↗</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Certificates -->
+      <div class="panel" role="tabpanel" id="panel-certificates" aria-labelledby="tab-certificates" hidden>
+        <ul class="docs">
+          <li class="doc card">
+            <button class="doc__img" type="button" data-zoom="assets/certs/java.webp" data-caption="Java — Certificate of Completion · Cacttus Education · April 2024">
+              <img src="assets/certs/java-sm.webp" alt="Certificate of completion for the Java training course, Cacttus Education, April 2024" loading="lazy" width="760" height="524" />
+            </button>
+            <div class="doc__body">
+              <p class="doc__meta mono"><span class="pill pill--done">Completed</span> April 2024</p>
+              <h4>Java Programming</h4>
+              <p>Cacttus Education · ITP Prizren — co-funded by the EU and German Cooperation</p>
+            </div>
+          </li>
+          <li class="doc card">
+            <button class="doc__img" type="button" data-zoom="assets/certs/web-design.webp" data-caption="Web Design course — HTML, CSS, WordPress, Photoshop · Diakonie Kosova · Jan–Feb 2024">
+              <img src="assets/certs/web-design-sm.webp" alt="Certificate for the web design course with HTML, CSS, WordPress and Photoshop modules, Diakonie Kosova, 2024" loading="lazy" width="538" height="760" />
+            </button>
+            <div class="doc__body">
+              <p class="doc__meta mono"><span class="pill pill--done">Completed</span> Jan – Feb 2024</p>
+              <h4>Web Design</h4>
+              <p>HTML · CSS · WordPress · Photoshop — Diakonie Kosova, ReLOaD 2 (EU &amp; UNDP)</p>
+            </div>
+          </li>
+          <li class="doc card">
+            <button class="doc__img" type="button" data-zoom="assets/certs/coca-cola-future-skills.webp" data-caption="Soft Skills & Leadership and Future Skills & AI · Coca-Cola HBC Kosova × Innovation Centre Kosovo · 30 Oct 2025">
+              <img src="assets/certs/coca-cola-future-skills-sm.webp" alt="Certificate of participation in the Coca-Cola Përkrah Rininë training with Innovation Centre Kosovo, October 2025" loading="lazy" width="760" height="537" />
+            </button>
+            <div class="doc__body">
+              <p class="doc__meta mono"><span class="pill">Training</span> Oct 2025</p>
+              <h4>Future Skills &amp; AI · Leadership</h4>
+              <p>Coca-Cola HBC Kosova "Përkrah Rininë" × Innovation Centre Kosovo</p>
+            </div>
+          </li>
+          <li class="doc card">
+            <button class="doc__img" type="button" data-zoom="assets/certs/ict-industry.webp" data-caption="ICT & Industry training · OJQ APRFK Mitrovicë with the Municipality of Mitrovica">
+              <img src="assets/certs/ict-industry-sm.webp" alt="Certificate for the ICT and industry training, OJQ APRFK Mitrovica" loading="lazy" width="760" height="532" />
+            </button>
+            <div class="doc__body">
+              <p class="doc__meta mono"><span class="pill">Training</span> Mitrovica</p>
+              <h4>ICT &amp; Industry</h4>
+              <p>OJQ APRFK Mitrovicë · Municipality of Mitrovica — Culture, Youth &amp; Sport</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Achievements -->
+      <div class="panel" role="tabpanel" id="panel-achievements" aria-labelledby="tab-achievements" hidden>
+        <ul class="docs docs--wide">
+          <li class="doc card">
+            <button class="doc__img" type="button" data-zoom="assets/certs/junctionx.webp" data-caption="JunctionX Regional Hackathon · DigiCamp & Digital Skills Festival · ITP Prizren · 21–23 May 2026">
+              <img src="assets/certs/junctionx-sm.webp" alt="Certificate of participation in the JunctionX Regional Hackathon, ITP Prizren, May 2026" loading="lazy" width="760" height="479" />
+            </button>
+            <div class="doc__body">
+              <p class="doc__meta mono"><span class="pill pill--event">Hackathon</span> 21 – 23 May 2026</p>
+              <h4>JunctionX Regional Hackathon</h4>
+              <p>DigiCamp &amp; Digital Skills Festival at ITP Prizren — three days of building with a team under a deadline. (That's the event T-shirt in my photo.)</p>
+            </div>
+          </li>
+          <li class="doc card">
+            <button class="doc__img" type="button" data-zoom="assets/certs/imsc-2026.webp" data-caption="1st International Multidisciplinary Students' Conference (IMSC 2026) · University “Isa Boletini” · 28 May 2026">
+              <img src="assets/certs/imsc-2026-sm.webp" alt="Certificate of participation in the 1st International Multidisciplinary Students' Conference, University Isa Boletini, May 2026" loading="lazy" width="760" height="537" />
+            </button>
+            <div class="doc__body">
+              <p class="doc__meta mono"><span class="pill pill--event">Conference</span> 28 May 2026</p>
+              <h4>IMSC 2026</h4>
+              <p>1st International Multidisciplinary Students' Conference — University "Isa Boletini", Mitrovica.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Tech stack -->
+      <div class="panel" role="tabpanel" id="panel-stack" aria-labelledby="tab-stack" hidden>
+        <ul class="techs">
+            <li class="tech card" style="--brand:#E34F26"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z"/></svg><span>HTML</span></li>
+            <li class="tech card" style="--brand:#7B5CE6"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M0 0v20.16A3.84 3.84 0 0 0 3.84 24h16.32A3.84 3.84 0 0 0 24 20.16V3.84A3.84 3.84 0 0 0 20.16 0Zm14.256 13.08c1.56 0 2.28 1.08 2.304 2.64h-1.608c.024-.288-.048-.6-.144-.84-.096-.192-.288-.264-.552-.264-.456 0-.696.264-.696.84-.024.576.288.888.768 1.08.72.288 1.608.744 1.92 1.296q.432.648.432 1.656c0 1.608-.912 2.592-2.496 2.592-1.656 0-2.4-1.032-2.424-2.688h1.68c0 .792.264 1.176.792 1.176.264 0 .456-.072.552-.24.192-.312.24-1.176-.048-1.512-.312-.408-.912-.6-1.32-.816q-.828-.396-1.224-.936c-.24-.36-.36-.888-.36-1.536 0-1.44.936-2.472 2.424-2.448m5.4 0c1.584 0 2.304 1.08 2.328 2.64h-1.608c0-.288-.048-.6-.168-.84-.096-.192-.264-.264-.528-.264-.48 0-.72.264-.72.84s.288.888.792 1.08c.696.288 1.608.744 1.92 1.296.264.432.408.984.408 1.656.024 1.608-.888 2.592-2.472 2.592-1.68 0-2.424-1.056-2.448-2.688h1.68c0 .744.264 1.176.792 1.176.264 0 .456-.072.552-.24.216-.312.264-1.176-.048-1.512-.288-.408-.888-.6-1.32-.816-.552-.264-.96-.576-1.2-.936s-.36-.888-.36-1.536c-.024-1.44.912-2.472 2.4-2.448m-11.031.018c.711-.006 1.419.198 1.839.63.432.432.672 1.128.648 1.992H9.336c.024-.456-.096-.792-.432-.96-.312-.144-.768-.048-.888.24-.12.264-.192.576-.168.864v3.504c0 .744.264 1.128.768 1.128a.65.65 0 0 0 .552-.264c.168-.24.192-.552.168-.84h1.776c.096 1.632-.984 2.712-2.568 2.688-1.536 0-2.496-.864-2.472-2.472v-4.032c0-.816.24-1.44.696-1.848.432-.408 1.146-.624 1.857-.63"/></svg><span>CSS</span></li>
+            <li class="tech card" style="--brand:#F7DF1E"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/></svg><span>JavaScript</span></li>
+            <li class="tech card" style="--brand:#3178C6"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z"/></svg><span>TypeScript</span></li>
+            <li class="tech card" style="--brand:#ED8B00"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11.915 0 11.7.215C9.515 2.4 7.47 6.39 6.046 10.483c-1.064 1.024-3.633 2.81-3.711 3.551-.093.87 1.746 2.611 1.55 3.235-.198.625-1.304 1.408-1.014 1.939.1.188.823.011 1.277-.491a13.389 13.389 0 0 0-.017 2.14c.076.906.27 1.668.643 2.232.372.563.956.911 1.667.911.397 0 .727-.114 1.024-.264.298-.149.571-.33.91-.5.68-.34 1.634-.666 3.53-.604 1.903.062 2.872.39 3.559.704.687.314 1.15.664 1.925.664.767 0 1.395-.336 1.807-.9.412-.563.631-1.33.72-2.24.06-.623.055-1.32 0-2.066.454.45 1.117.604 1.213.424.29-.53-.816-1.314-1.013-1.937-.198-.624 1.642-2.366 1.549-3.236-.08-.748-2.707-2.568-3.748-3.586C16.428 6.374 14.308 2.394 12.13.215zm.175 6.038a2.95 2.95 0 0 1 2.943 2.942 2.95 2.95 0 0 1-2.943 2.943A2.95 2.95 0 0 1 9.148 8.98a2.95 2.95 0 0 1 2.942-2.942zM8.685 7.983a3.515 3.515 0 0 0-.145.997c0 1.951 1.6 3.55 3.55 3.55 1.95 0 3.55-1.598 3.55-3.55 0-.329-.046-.648-.132-.951.334.095.64.208.915.336a42.699 42.699 0 0 1 2.042 5.829c.678 2.545 1.01 4.92.846 6.607-.082.844-.29 1.51-.606 1.94-.315.431-.713.651-1.315.651-.593 0-.932-.27-1.673-.61-.741-.338-1.825-.694-3.792-.758-1.974-.064-3.073.293-3.821.669-.375.188-.659.373-.911.5s-.466.2-.752.2c-.53 0-.876-.209-1.16-.64-.285-.43-.474-1.101-.545-1.948-.141-1.693.176-4.069.823-6.614a43.155 43.155 0 0 1 1.934-5.783c.348-.167.749-.31 1.192-.425zm-3.382 4.362a.216.216 0 0 1 .13.031c-.166.56-.323 1.116-.463 1.665a33.849 33.849 0 0 0-.547 2.555 3.9 3.9 0 0 0-.2-.39c-.58-1.012-.914-1.642-1.16-2.08.315-.24 1.679-1.755 2.24-1.781zm13.394.01c.562.027 1.926 1.543 2.24 1.783-.246.438-.58 1.068-1.16 2.08a4.428 4.428 0 0 0-.163.309 32.354 32.354 0 0 0-.562-2.49 40.579 40.579 0 0 0-.482-1.652.216.216 0 0 1 .127-.03z"/></svg><span>Java</span></li>
+            <li class="tech card" style="--brand:#9B4F96"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.5 21.1 6.75v10.5L12 22.5l-9.1-5.25V6.75L12 1.5Z" opacity=".9"/><text x="12" y="15.6" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="800" fill="#0d0d15">C#</text></svg><span>C#</span></li>
+            <li class="tech card" style="--brand:#5FA04E"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z M19.099,13.993 c0-1.9-1.284-2.406-3.987-2.763c-2.731-0.361-3.009-0.548-3.009-1.187c0-0.528,0.235-1.233,2.258-1.233 c1.807,0,2.473,0.389,2.747,1.607c0.024,0.115,0.129,0.199,0.247,0.199h1.141c0.071,0,0.138-0.031,0.186-0.081 c0.048-0.054,0.074-0.123,0.067-0.196c-0.177-2.098-1.571-3.076-4.388-3.076c-2.508,0-4.004,1.058-4.004,2.833 c0,1.925,1.488,2.457,3.895,2.695c2.88,0.282,3.103,0.703,3.103,1.269c0,0.983-0.789,1.402-2.642,1.402 c-2.327,0-2.839-0.584-3.011-1.742c-0.02-0.124-0.126-0.215-0.253-0.215h-1.137c-0.141,0-0.254,0.112-0.254,0.253 c0,1.482,0.806,3.248,4.655,3.248C17.501,17.007,19.099,15.91,19.099,13.993z"/></svg><span>Node.js</span></li>
+            <li class="tech card" style="--brand:#E8E6E3"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.262 16.666h1.146l6.975-9.325H19.22zm9.778 1.441v.004l-4.334-5.706-.557.74 4.873 6.682H.945V4.173h9.505l5.026 6.7.574-.772-4.374-5.928h.003l-.719-.945H0v17.544h24zM10.917 8.705a3.8 3.8 0 0 0-1.292-1.183q-.796-.45-1.916-.45c-.746 0-1.37.14-1.906.424a3.76 3.76 0 0 0-1.31 1.12 4.9 4.9 0 0 0-.75 1.581 7.17 7.17 0 0 0 0 3.696c.148.567.402 1.101.75 1.573a3.5 3.5 0 0 0 1.31 1.066q.803.39 1.906.389 1.77 0 2.739-.868.966-.867 1.328-2.457h-1.139q-.271 1.084-.977 1.734-.704.651-1.952.65-.812 0-1.392-.342a3.1 3.1 0 0 1-.957-.869 3.5 3.5 0 0 1-.551-1.182 5 5 0 0 1-.17-1.133 9 9 0 0 0-.015-.286 4.5 4.5 0 0 1 .015-.829c.047-.418.147-.83.296-1.223A3.7 3.7 0 0 1 5.54 9.05a2.9 2.9 0 0 1 .922-.742q.541-.28 1.246-.28c.47 0 .869.093 1.23.28q.541.281.922.742.379.461.587 1.057t.225 1.246H5.625l.004.957h6.182a7.3 7.3 0 0 0-.18-1.924 4.9 4.9 0 0 0-.715-1.68z"/></svg><span>Express.js</span></li>
+            <li class="tech card" style="--brand:#E8E6E3"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z"/></svg><span>Next.js</span></li>
+            <li class="tech card" style="--brand:#E8E6E3"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M0 20.084c.043.53.23 1.063.718 1.778.58.849 1.576 1.315 2.303.567.49-.505 5.794-9.776 8.35-13.29a.761.761 0 011.248 0c2.556 3.514 7.86 12.785 8.35 13.29.727.748 1.723.282 2.303-.567.57-.835.728-1.42.728-2.046 0-.426-8.26-15.798-9.092-17.078-.8-1.23-1.044-1.498-2.397-1.542h-1.032c-1.353.044-1.597.311-2.398 1.542C8.267 3.991.33 18.758 0 19.77Z"/></svg><span>Expo</span></li>
+            <li class="tech card" style="--brand:#4F8FE8"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.5594 14.7228a.5269.5269 0 0 0-.0563-.1191c-.139-.2632-.4768-.3418-1.0074-.2321-1.6533.3411-2.2935.1312-2.5256-.0191 1.342-2.0482 2.445-4.522 3.0411-6.8297.2714-1.0507.7982-3.5237.1222-4.7316a1.5641 1.5641 0 0 0-.1509-.235C21.6931.9086 19.8007.0248 17.5099.0005c-1.4947-.0158-2.7705.3461-3.1161.4794a9.449 9.449 0 0 0-.5159-.0816 8.044 8.044 0 0 0-1.3114-.1278c-1.1822-.0184-2.2038.2642-3.0498.8406-.8573-.3211-4.7888-1.645-7.2219.0788C.9359 2.1526.3086 3.8733.4302 6.3043c.0409.818.5069 3.334 1.2423 5.7436.4598 1.5065.9387 2.7019 1.4334 3.582.553.9942 1.1259 1.5933 1.7143 1.7895.4474.1491 1.1327.1441 1.8581-.7279.8012-.9635 1.5903-1.8258 1.9446-2.2069.4351.2355.9064.3625 1.39.3772a.0569.0569 0 0 0 .0004.0041 11.0312 11.0312 0 0 0-.2472.3054c-.3389.4302-.4094.5197-1.5002.7443-.3102.064-1.1344.2339-1.1464.8115-.0025.1224.0329.2309.0919.3268.2269.4231.9216.6097 1.015.6331 1.3345.3335 2.5044.092 3.3714-.6787-.017 2.231.0775 4.4174.3454 5.0874.2212.5529.7618 1.9045 2.4692 1.9043.2505 0 .5263-.0291.8296-.0941 1.7819-.3821 2.5557-1.1696 2.855-2.9059.1503-.8707.4016-2.8753.5388-4.1012.0169-.0703.0357-.1207.057-.1362.0007-.0005.0697-.0471.4272.0307a.3673.3673 0 0 0 .0443.0068l.2539.0223.0149.001c.8468.0384 1.9114-.1426 2.5312-.4308.6438-.2988 1.8057-1.0323 1.5951-1.6698zM2.371 11.8765c-.7435-2.4358-1.1779-4.8851-1.2123-5.5719-.1086-2.1714.4171-3.6829 1.5623-4.4927 1.8367-1.2986 4.8398-.5408 6.108-.13-.0032.0032-.0066.0061-.0098.0094-2.0238 2.044-1.9758 5.536-1.9708 5.7495-.0002.0823.0066.1989.0162.3593.0348.5873.0996 1.6804-.0735 2.9184-.1609 1.1504.1937 2.2764.9728 3.0892.0806.0841.1648.1631.2518.2374-.3468.3714-1.1004 1.1926-1.9025 2.1576-.5677.6825-.9597.5517-1.0886.5087-.3919-.1307-.813-.5871-1.2381-1.3223-.4796-.839-.9635-2.0317-1.4155-3.5126zm6.0072 5.0871c-.1711-.0428-.3271-.1132-.4322-.1772.0889-.0394.2374-.0902.4833-.1409 1.2833-.2641 1.4815-.4506 1.9143-1.0002.0992-.126.2116-.2687.3673-.4426a.3549.3549 0 0 0 .0737-.1298c.1708-.1513.2724-.1099.4369-.0417.156.0646.3078.26.3695.4752.0291.1016.0619.2945-.0452.4444-.9043 1.2658-2.2216 1.2494-3.1676 1.0128zm2.094-3.988-.0525.141c-.133.3566-.2567.6881-.3334 1.003-.6674-.0021-1.3168-.2872-1.8105-.8024-.6279-.6551-.9131-1.5664-.7825-2.5004.1828-1.3079.1153-2.4468.079-3.0586-.005-.0857-.0095-.1607-.0122-.2199.2957-.2621 1.6659-.9962 2.6429-.7724.4459.1022.7176.4057.8305.928.5846 2.7038.0774 3.8307-.3302 4.7363-.084.1866-.1633.3629-.2311.5454zm7.3637 4.5725c-.0169.1768-.0358.376-.0618.5959l-.146.4383a.3547.3547 0 0 0-.0182.1077c-.0059.4747-.054.6489-.115.8693-.0634.2292-.1353.4891-.1794 1.0575-.11 1.4143-.8782 2.2267-2.4172 2.5565-1.5155.3251-1.7843-.4968-2.0212-1.2217a6.5824 6.5824 0 0 0-.0769-.2266c-.2154-.5858-.1911-1.4119-.1574-2.5551.0165-.5612-.0249-1.9013-.3302-2.6462.0044-.2932.0106-.5909.019-.8918a.3529.3529 0 0 0-.0153-.1126 1.4927 1.4927 0 0 0-.0439-.208c-.1226-.4283-.4213-.7866-.7797-.9351-.1424-.059-.4038-.1672-.7178-.0869.067-.276.1831-.5875.309-.9249l.0529-.142c.0595-.16.134-.3257.213-.5012.4265-.9476 1.0106-2.2453.3766-5.1772-.2374-1.0981-1.0304-1.6343-2.2324-1.5098-.7207.0746-1.3799.3654-1.7088.5321a5.6716 5.6716 0 0 0-.1958.1041c.0918-1.1064.4386-3.1741 1.7357-4.4823a4.0306 4.0306 0 0 1 .3033-.276.3532.3532 0 0 0 .1447-.0644c.7524-.5706 1.6945-.8506 2.802-.8325.4091.0067.8017.0339 1.1742.081 1.939.3544 3.2439 1.4468 4.0359 2.3827.8143.9623 1.2552 1.9315 1.4312 2.4543-1.3232-.1346-2.2234.1268-2.6797.779-.9926 1.4189.543 4.1729 1.2811 5.4964.1353.2426.2522.4522.2889.5413.2403.5825.5515.9713.7787 1.2552.0696.087.1372.1714.1885.245-.4008.1155-1.1208.3825-1.0552 1.717-.0123.1563-.0423.4469-.0834.8148-.0461.2077-.0702.4603-.0994.7662zm.8905-1.6211c-.0405-.8316.2691-.9185.5967-1.0105a2.8566 2.8566 0 0 0 .135-.0406 1.202 1.202 0 0 0 .1342.103c.5703.3765 1.5823.4213 3.0068.1344-.2016.1769-.5189.3994-.9533.6011-.4098.1903-1.0957.333-1.7473.3636-.7197.0336-1.0859-.0807-1.1721-.151zm.5695-9.2712c-.0059.3508-.0542.6692-.1054 1.0017-.055.3576-.112.7274-.1264 1.1762-.0142.4368.0404.8909.0932 1.3301.1066.887.216 1.8003-.2075 2.7014a3.5272 3.5272 0 0 1-.1876-.3856c-.0527-.1276-.1669-.3326-.3251-.6162-.6156-1.1041-2.0574-3.6896-1.3193-4.7446.3795-.5427 1.3408-.5661 2.1781-.463zm.2284 7.0137a12.3762 12.3762 0 0 0-.0853-.1074l-.0355-.0444c.7262-1.1995.5842-2.3862.4578-3.4385-.0519-.4318-.1009-.8396-.0885-1.2226.0129-.4061.0666-.7543.1185-1.0911.0639-.415.1288-.8443.1109-1.3505.0134-.0531.0188-.1158.0118-.1902-.0457-.4855-.5999-1.938-1.7294-3.253-.6076-.7073-1.4896-1.4972-2.6889-2.0395.5251-.1066 1.2328-.2035 2.0244-.1859 2.0515.0456 3.6746.8135 4.8242 2.2824a.908.908 0 0 1 .0667.1002c.7231 1.3556-.2762 6.2751-2.9867 10.5405zm-8.8166-6.1162c-.025.1794-.3089.4225-.6211.4225a.5821.5821 0 0 1-.0809-.0056c-.1873-.026-.3765-.144-.5059-.3156-.0458-.0605-.1203-.178-.1055-.2844.0055-.0401.0261-.0985.0925-.1488.1182-.0894.3518-.1226.6096-.0867.3163.0441.6426.1938.6113.4186zm7.9305-.4114c.0111.0792-.049.201-.1531.3102-.0683.0717-.212.1961-.4079.2232a.5456.5456 0 0 1-.075.0052c-.2935 0-.5414-.2344-.5607-.3717-.024-.1765.2641-.3106.5611-.352.297-.0414.6111.0088.6356.1851z"/></svg><span>PostgreSQL</span></li>
+            <li class="tech card" style="--brand:#3FCF8E"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11.9 1.036c-.015-.986-1.26-1.41-1.874-.637L.764 12.05C-.33 13.427.65 15.455 2.409 15.455h9.579l.113 7.51c.014.985 1.259 1.408 1.873.636l9.262-11.653c1.093-1.375.113-3.403-1.645-3.403h-9.642z"/></svg><span>Supabase</span></li>
+            <li class="tech card" style="--brand:#44A8E0"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.678.521c-1.032-.92-2.28-.55-3.513.544a8.71 8.71 0 0 0-.547.535c-2.109 2.237-4.066 6.38-4.674 9.544.237.48.422 1.093.544 1.561a13.044 13.044 0 0 1 .164.703s-.019-.071-.096-.296l-.05-.146a1.689 1.689 0 0 0-.033-.08c-.138-.32-.518-.995-.686-1.289-.143.423-.27.818-.376 1.176.484.884.778 2.4.778 2.4s-.025-.099-.147-.442c-.107-.303-.644-1.244-.772-1.464-.217.804-.304 1.346-.226 1.478.152.256.296.698.422 1.186.286 1.1.485 2.44.485 2.44l.017.224a22.41 22.41 0 0 0 .056 2.748c.095 1.146.273 2.13.5 2.657l.155-.084c-.334-1.038-.47-2.399-.41-3.967.09-2.398.642-5.29 1.661-8.304 1.723-4.55 4.113-8.201 6.3-9.945-1.993 1.8-4.692 7.63-5.5 9.788-.904 2.416-1.545 4.684-1.931 6.857.666-2.037 2.821-2.912 2.821-2.912s1.057-1.304 2.292-3.166c-.74.169-1.955.458-2.362.629-.6.251-.762.337-.762.337s1.945-1.184 3.613-1.72C21.695 7.9 24.195 2.767 21.678.521m-18.573.543A1.842 1.842 0 0 0 1.27 2.9v16.608a1.84 1.84 0 0 0 1.835 1.834h9.418a22.953 22.953 0 0 1-.052-2.707c-.006-.062-.011-.141-.016-.2a27.01 27.01 0 0 0-.473-2.378c-.121-.47-.275-.898-.369-1.057-.116-.197-.098-.31-.097-.432 0-.12.015-.245.037-.386a9.98 9.98 0 0 1 .234-1.045l.217-.028c-.017-.035-.014-.065-.031-.097l-.041-.381a32.8 32.8 0 0 1 .382-1.194l.2-.019c-.008-.016-.01-.038-.018-.053l-.043-.316c.63-3.28 2.587-7.443 4.8-9.791.066-.069.133-.128.198-.194Z"/></svg><span>SQLite</span></li>
+            <li class="tech card" style="--brand:#FB7A24"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.792,11.923c0.113,0.043,0.226,0.079,0.334,0.128c0.45,0.203,0.715,0.553,0.748,1.044 c0.041,0.634,0.044,1.271,0.002,1.905c-0.049,0.732-0.725,1.292-1.483,1.271c-0.735-0.021-1.369-0.62-1.397-1.341 c-0.017-0.441-0.003-0.884-0.006-1.326c-0.001-0.239-0.003-0.242-0.245-0.243c-1.363-0.001-2.726,0.008-4.089-0.003 c-0.888-0.007-1.421,0.482-1.471,1.46c-0.019,0.38-0.1,0.727-0.357,1.018c-0.397,0.451-0.898,0.601-1.472,0.466 c-0.554-0.131-0.867-0.522-1.035-1.048c-0.117-0.367-0.056-0.737,0.012-1.094c0.341-1.797,1.366-3.006,3.125-3.555 c0.357-0.112,0.731-0.166,1.105-0.166c0.94,0.001,1.881,0.001,2.821-0.001c0.128,0,0.257-0.012,0.385-0.021 c0.702-0.051,1.166-0.511,1.22-1.352c0.004-0.064,0-0.129,0.001-0.193c0.011-0.788,0.605-1.396,1.393-1.425 c0.787-0.029,1.438,0.527,1.493,1.318c0.076,1.083-0.265,2.046-0.913,2.907C16.903,11.751,16.819,11.816,16.792,11.923z M8.249,10.436c-0.258-0.008-0.571,0.018-0.882-0.035c-0.536-0.09-0.876-0.39-1.02-0.916C6.19,8.912,6.25,8.388,6.698,7.96 C7.154,7.526,7.694,7.4,8.285,7.645c0.52,0.216,0.859,0.731,0.89,1.293C9.2,9.382,9.178,9.828,9.182,10.272 c0.001,0.116-0.043,0.167-0.161,0.165C8.781,10.434,8.542,10.436,8.249,10.436z M21.682,0H2.318C1.102,0,0.116,0.986,0.116,2.202 v19.317c0,1.37,1.111,2.481,2.481,2.481h18.807c1.37,0,2.481-1.111,2.481-2.481V2.202C23.884,0.986,22.898,0,21.682,0z M20.125,12.473c0.519,0.804,0.733,1.69,0.677,2.657c-0.108,1.886-1.413,3.474-3.25,3.916c-2.585,0.623-4.566-0.923-5.233-2.794 c-0.109-0.304-0.16-0.622-0.224-0.985c-0.068,0.414-0.115,0.789-0.264,1.134c-0.697,1.617-1.884,2.603-3.665,2.799 c-2.104,0.232-4.048-1.067-4.632-3.084c-0.25-0.863-0.175-1.747-0.068-2.625c0.08-0.653,0.321-1.268,0.632-1.848 c0.057-0.106,0.057-0.184-0.01-0.285c-0.561-0.845-0.779-1.777-0.7-2.784C3.43,8.035,3.56,7.52,3.805,7.038 C4.52,5.626,6.09,4.427,8.193,4.626c1.849,0.175,3.562,1.77,3.83,3.564c0.013,0.09,0.039,0.178,0.068,0.311 c0.044-0.241,0.076-0.439,0.118-0.636c0.344-1.63,1.94-3.335,4.201-3.357c2.292-0.021,3.99,1.776,4.31,3.446 c0.17,0.888,0.089,1.776-0.103,2.663c-0.112,0.517-0.31,1.008-0.524,1.492C20.034,12.245,20.043,12.345,20.125,12.473z"/></svg><span>XAMPP</span></li>
+            <li class="tech card" style="--brand:#F05032"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.09 23.549a1.54 1.54 0 0 1-2.18 0L.451 13.089a1.54 1.54 0 0 1 0-2.179l7.191-7.19 2.733 2.733a1.85 1.85 0 0 0 .964 2.326v6.66a1.849 1.849 0 1 0 1.54 0V8.957l2.508 2.508a1.85 1.85 0 1 0 1.09-1.09l-2.634-2.634a1.85 1.85 0 0 0-2.378-2.377L8.73 2.63 10.91.451a1.54 1.54 0 0 1 2.179 0l10.459 10.46a1.54 1.54 0 0 1 0 2.179z"/></svg><span>Git</span></li>
+            <li class="tech card" style="--brand:#E8E6E3"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg><span>GitHub</span></li>
+            <li class="tech card" style="--brand:#E8E6E3"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m12 1.608 12 20.784H0Z"/></svg><span>Vercel</span></li>
+            <li class="tech card" style="--brand:#9b8cff"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.263.007c-3.121-.147-5.744 2.109-6.192 5.082-.018.138-.045.272-.067.405-.696 3.703-3.936 6.507-7.827 6.507-1.388 0-2.691-.356-3.825-.979a.2024.2024 0 0 0-.302.178V24H12v-8.999c0-1.656 1.338-3 2.987-3h2.988c3.382 0 6.103-2.817 5.97-6.244-.12-3.084-2.61-5.603-5.682-5.75"/></svg><span>Render</span></li>
+            <li class="tech card" style="--brand:#4A8FE0"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.746c-6.627 0-12 3.599-12 8.037 0 3.897 4.144 7.144 9.64 7.88V16.26c-2.924-.915-4.925-2.755-4.925-4.877 0-3.035 4.084-5.494 9.12-5.494 5.038 0 8.757 1.683 8.757 5.494 0 1.976-.999 3.379-2.662 4.272.09.066.174.128.258.216.169.149.25.363.372.544 2.128-1.45 3.44-3.437 3.44-5.631 0-4.44-5.373-8.038-12-8.038zm-2.111 4.99v13.516l4.093-.002-.002-5.291h1.1c.225 0 .321.066.549.25.272.22.715.982.715.982l2.164 4.063 4.627-.002-2.864-4.826s-.086-.193-.265-.383a2.22 2.22 0 00-.582-.416c-.422-.214-1.149-.434-1.149-.434s3.578-.264 3.578-3.826c0-3.562-3.744-3.63-3.744-3.63zm4.127 2.93l2.478.002s1.149-.062 1.149 1.127c0 1.165-1.149 1.17-1.149 1.17h-2.478zm1.754 6.119c-.494.049-1.012.079-1.54.088v1.807a16.622 16.622 0 002.37-.473l-.471-.891s-.108-.183-.248-.394c-.039-.054-.08-.098-.111-.137z"/></svg><span>R</span></li>
+            <li class="tech card" style="--brand:#75AADB"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.178.002a12.002 12.002 0 0 0-8.662 3.515 12.002 12.002 0 0 0 0 16.97 12.002 12.002 0 0 0 16.97 0 12.002 12.002 0 0 0 0-16.97A12.002 12.002 0 0 0 12.179.002zM7.77 5.995c.562.128 1.05.217 1.663.217.921 0 1.863-.217 2.786-.217 1.79 0 3.45.814 3.45 2.8 0 1.54-.921 2.517-2.35 2.93l2.788 4.107h1.301v1.01h-1.986l-3.293-4.934h-1.757v3.924h1.718v1.01H7.77v-1.01h1.483V7.134L7.77 6.951v-.957zm4.466 1.012c-.596 0-1.213.053-1.864.127v3.798l.941.02c2.298.034 3.183-.85 3.183-2.026 0-1.376-.997-1.919-2.26-1.919z"/></svg><span>RStudio</span></li>
+            <li class="tech card" style="--brand:#E51050"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3.8672 1.0527v.0157L0 3.3848v17.914l3.8965-2.332h18.3398V2.3301c0-.702-.5773-1.2774-1.2793-1.2774H3.8672zm7.5058 4.0098h3.3008l2.9844 9.9512h-2.5879l-.5683-2.1895h-2.9844l-.5703 2.1621h-2.416l2.8417-9.9238zm11.8633.0273v14.877H4.172l-2.0684 1.2383v.4648c0 .702.5793 1.2774 1.2813 1.2774H24V5.0898h-.7637zM12.9668 6.6816l-.9941 4.3243h2.0468l-1.0527-4.3243z"/></svg><span>AutoCAD</span></li>
+            <li class="tech card" style="--brand:#F2A93B"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m.129 20.202 14.7-9.136h7.625c.235 0 .445.188.445.445 0 .21-.092.305-.21.375l-7.222 4.323c-.47.283-.633.845-.633 1.265l-.008 2.725H24V4.362a.561.561 0 0 0-.585-.562h-8.752L0 12.893V20.2h.129z"/></svg><span>Autodesk Inventor</span></li>
+            <li class="tech card" style="--brand:#1BA0D7"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.331 18.171V17.06l-.022.01c-.25.121-.522.19-.801.203a1.186 1.186 0 01-.806-.237 1.038 1.038 0 01-.352-.498 1.21 1.21 0 01-.023-.667c.052-.225.178-.426.357-.569.16-.134.355-.218.562-.242a1.85 1.85 0 011.061.198l.024.013v-1.117l-.051-.014a2.862 2.862 0 00-1.011-.132 2.34 2.34 0 00-.903.206c-.287.132-.54.327-.739.571a2.221 2.221 0 00-.04 2.705c.295.378.709.645 1.175.756.491.12 1.006.102 1.487-.052l.082-.023M5.336 18.171V17.06l-.022.01c-.25.121-.522.19-.801.203a1.183 1.183 0 01-.806-.237 1.03 1.03 0 01-.351-.498 1.202 1.202 0 01-.024-.667c.052-.225.177-.426.357-.569.16-.134.355-.218.562-.242a1.85 1.85 0 011.061.198l.024.013v-1.117l-.051-.014a2.862 2.862 0 00-1.011-.132 2.344 2.344 0 00-.903.206 2.08 2.08 0 00-.74.571 2.224 2.224 0 00-.041 2.705 2.11 2.11 0 001.176.756c.491.12 1.005.102 1.487-.052l.083-.023M9.26 17.249l-.004.957.07.012c.22.041.441.069.664.085.195.019.391.022.587.012.187-.014.372-.049.551-.104.21-.06.405-.163.571-.305a1.16 1.16 0 00.333-.478 1.31 1.31 0 00-.007-.96 1.068 1.068 0 00-.298-.414 1.261 1.261 0 00-.438-.255l-.722-.268a.388.388 0 01-.197-.188.245.245 0 01.008-.219.382.382 0 01.154-.142.798.798 0 01.257-.074c.153-.022.308-.021.46.005.18.02.358.051.533.096l.038.008v-.883l-.069-.015a4.749 4.749 0 00-.543-.097 2.844 2.844 0 00-.714-.003c-.3.027-.585.143-.821.33-.16.126-.281.293-.351.484-.104.29-.105.608 0 .899.054.145.14.274.252.381.097.093.207.173.327.236.157.084.324.149.497.195.057.017.114.035.17.054l.085.031.024.01c.084.03.162.078.226.14.045.042.08.094.101.151a.325.325 0 01.001.161.339.339 0 01-.166.198.856.856 0 01-.275.086 2.032 2.032 0 01-.427.021 5.208 5.208 0 01-.557-.074 9.195 9.195 0 01-.287-.067l-.033-.006zm-2.475.995h1.05v-4.167h-1.05v4.167zm12.162-2.936a1.095 1.095 0 011.541.158 1.094 1.094 0 01-.157 1.541l-.017.014a1.096 1.096 0 01-1.367-1.713m-1.525.854a2.193 2.193 0 002.666 2.107 2.139 2.139 0 00.701-3.937 2.207 2.207 0 00-3.367 1.83M22.961 10.728a.52.52 0 001.039 0V9.573a.52.52 0 00-1.039 0v1.155M20.117 10.728a.522.522 0 001.041 0V8.139a.521.521 0 00-1.04 0v2.589M17.231 11.771a.521.521 0 001.039 0V6.17a.52.52 0 00-1.039 0v5.601M14.393 10.728a.521.521 0 001.04 0V8.139a.52.52 0 00-1.039 0v2.589M11.494 10.728a.522.522 0 001.039 0V9.573a.52.52 0 00-1.039 0v1.155M8.624 10.728a.52.52 0 001.039 0V8.139a.52.52 0 00-1.039 0v2.589M5.737 11.771a.52.52 0 001.039 0V6.17a.52.52 0 00-1.039 0v5.601M2.876 10.728a.522.522 0 001.04 0V8.139a.52.52 0 00-1.039 0v2.589M0 10.728a.521.521 0 001.039 0V9.573a.52.52 0 00-1.039 0v1.155"/></svg><span>Cisco Packet Tracer</span></li>
+        </ul>
       </div>
     </section>
 
-    <!-- SERVICES -->
-    <section class="services" id="services">
-      <div class="section-head">
-        <span class="section-head__num">(03)</span>
-        <span class="section-head__label">What I do</span>
+    <!-- Project details (shown in the dialog) -->
+    <template id="details-faturo">
+      <p class="details__kicker mono">01 · Multi-tenant SaaS · 2026</p>
+      <h3>Faturo</h3>
+      <p class="details__lead">A complete invoicing SaaS for freelancers and small businesses in Kosovo — try it with one click, no sign-up.</p>
+      <div class="details__gallery">
+        <img src="assets/faturo/dashboard.webp" alt="Faturo dashboard with revenue, unpaid and overdue totals and a 12-month revenue chart" width="1400" height="875" />
+        <img src="assets/faturo/paid.webp" alt="Faturo invoice totals with a green PAID stamp" width="896" height="275" />
       </div>
-      <ol class="rows">
-        <li class="row" data-reveal>
-          <span class="row__num">01</span>
-          <h3 class="row__title">Mobile apps</h3>
-          <p class="row__desc">Cross-platform iOS &amp; Android apps with React Native and Expo — navigation, auth, maps, notifications, camera and offline-friendly UX.</p>
-          <span class="row__arrow">→</span>
-        </li>
-        <li class="row" data-reveal>
-          <span class="row__num">02</span>
-          <h3 class="row__title">Full-stack web</h3>
-          <p class="row__desc">Responsive websites and web apps with Node.js and Next.js, from REST APIs and authentication to admin dashboards.</p>
-          <span class="row__arrow">→</span>
-        </li>
-        <li class="row" data-reveal>
-          <span class="row__num">03</span>
-          <h3 class="row__title">Data &amp; backend</h3>
-          <p class="row__desc">Relational schemas in PostgreSQL and SQLite, Supabase with Row Level Security, and business rules enforced where they belong — in the database.</p>
-          <span class="row__arrow">→</span>
-        </li>
-        <li class="row" data-reveal>
-          <span class="row__num">04</span>
-          <h3 class="row__title">Interface &amp; motion</h3>
-          <p class="row__desc">Clean, accessible interfaces with purposeful animation — dark &amp; light themes, micro-interactions and attention to detail.</p>
-          <span class="row__arrow">→</span>
-        </li>
-      </ol>
-    </section>
+      <h4>Highlights</h4>
+      <ul class="details__list">
+        <li>Teams with single-use hashed invite links, owner / admin / member roles enforced on the server, an activity log and login rate limiting</li>
+        <li>Free / Pro subscriptions — limits, checkout, renewals and cancellations — behind a billing provider interface</li>
+        <li>Invoices with VAT and discounts, money kept in integer cents and recomputed on the server; PDF export</li>
+        <li>Public invoice links with view tracking; formula-safe CSV export; Albanian &amp; English, light &amp; dark</li>
+      </ul>
+      <ul class="tags"><li>Next.js 16</li><li>TypeScript</li><li>Postgres (Neon)</li><li>Drizzle ORM</li><li>Auth.js</li><li>Zod</li><li>E2E tests</li></ul>
+      <div class="details__links">
+        <a class="btn btn--primary btn--sm" href="https://faturo-two.vercel.app/" target="_blank" rel="noopener">Try the live demo ↗</a>
+        <a class="btn btn--ghost btn--sm" href="https://github.com/Arianitxhafa/faturo" target="_blank" rel="noopener">View code ↗</a>
+      </div>
+    </template>
 
-    <!-- JOURNEY -->
-    <section class="journey">
-      <div class="section-head">
-        <span class="section-head__num">(04)</span>
-        <span class="section-head__label">Journey</span>
+    <template id="details-careerpilot">
+      <p class="details__kicker mono">02 · Web app · CV tools · PWA · 2026</p>
+      <h3>CareerPilot</h3>
+      <p class="details__lead">A job-search co-pilot for students: every application on one board, scored against your CV — in English and Albanian, installable on your phone.</p>
+      <div class="details__gallery">
+        <img src="assets/careerpilot/dashboard.webp" alt="CareerPilot dashboard with stats, this week's interviews and a Kanban board" width="1400" height="875" />
+        <img src="assets/careerpilot/match.webp" alt="CareerPilot Job match: jobs ranked by CV match score" width="796" height="282" />
       </div>
-      <div class="timeline">
-        <div class="timeline__line"><i></i></div>
-        <div class="tl" data-reveal>
-          <span class="tl__year">2024</span>
-          <div><h4>Started Computer Science &amp; Engineering</h4><p>University of Mitrovica "Isa Boletini", Faculty of Mechanical &amp; Computer Engineering — algorithms &amp; data structures, OOP, database systems and web technologies.</p></div>
-        </div>
-        <div class="tl" data-reveal>
-          <span class="tl__year">2025</span>
-          <div><h4>Foundations &amp; certifications</h4><p>First programs, websites and databases. Certified in Java OOP (Cacttus Education), WordPress and Adobe Photoshop (Diakonie).</p></div>
-        </div>
-        <div class="tl" data-reveal>
-          <span class="tl__year">2026</span>
-          <div><h4>Shipping full products</h4><p>Built and deployed Rentigo, CareerPilot and Faturo — a multi-tenant invoicing SaaS — end to end, and became lead developer of TrimTime, a full booking platform for barbershops now in active development.</p></div>
-        </div>
-        <div class="tl tl--next" data-reveal>
-          <span class="tl__year">2027</span>
-          <div><h4>Graduation &amp; first role</h4><p>Looking for an internship or junior position where I can learn fast and ship real things.</p></div>
-        </div>
+      <h4>Highlights</h4>
+      <ul class="details__list">
+        <li>Import a job from its link — JobPosting data read through an SSRF-guarded server fetch</li>
+        <li>CV tools: in-browser PDF import, match scores across every job, the skills worth learning next and cover-letter templates</li>
+        <li>Drag-and-drop Kanban with optimistic updates, calendar with .ics export, insights and CSV export</li>
+        <li>Installable PWA with an offline page; Postgres Row Level Security; unit-tested matcher and importer</li>
+      </ul>
+      <ul class="tags"><li>Next.js 16</li><li>TypeScript</li><li>Supabase</li><li>Tailwind CSS</li><li>PWA</li><li>Unit tests</li></ul>
+      <div class="details__links">
+        <a class="btn btn--primary btn--sm" href="https://career-pilot-weld-six.vercel.app/" target="_blank" rel="noopener">Try the live demo ↗</a>
+        <a class="btn btn--ghost btn--sm" href="https://github.com/Arianitxhafa/career-pilot" target="_blank" rel="noopener">View code ↗</a>
       </div>
+    </template>
 
-      <div class="creds">
-        <div class="creds__col" data-reveal>
-          <h3 class="creds__title">Certifications</h3>
-          <ul>
-            <li><b>Java — Object-Oriented Programming</b><span>Cacttus Education</span></li>
-            <li><b>WordPress — Web Design &amp; Management</b><span>Diakonie</span></li>
-            <li><b>Adobe Photoshop — Graphic Design</b><span>Diakonie</span></li>
-          </ul>
-        </div>
-        <div class="creds__col" data-reveal>
-          <h3 class="creds__title">Languages</h3>
-          <ul>
-            <li><b>Albanian</b><span>Native</span></li>
-            <li><b>English</b><span>B2</span></li>
-            <li><b>French</b><span>A1</span></li>
-          </ul>
-        </div>
-        <a class="creds__cv" href="Arianit_Xhafa_CV.pdf" download data-magnetic data-cursor="PDF" data-reveal>
-          <span class="creds__cv-kicker">Résumé · 1 page · PDF</span>
-          <span class="creds__cv-title">Download my CV</span>
-          <span class="creds__cv-arrow">↓</span>
-        </a>
+    <template id="details-rentigo">
+      <p class="details__kicker mono">03 · Full-stack web app · 2026</p>
+      <h3>Rentigo</h3>
+      <p class="details__lead">A car rental platform built from first principles — no frameworks, just Node.js, Postgres and the browser.</p>
+      <div class="details__gallery">
+        <img src="assets/rentigo/home.webp" alt="Rentigo home page with a car photo and the search form" width="1400" height="875" />
       </div>
-    </section>
+      <h4>Highlights</h4>
+      <ul class="details__list">
+        <li>Hand-written JSON API running as a Vercel function, with serverless PostgreSQL on Neon</li>
+        <li>Fleet catalogue with search, category, location and status filters; accounts with scrypt hashing and database-backed sessions</li>
+        <li>Race-free bookings and a protected admin dashboard for bookings, leads and the fleet</li>
+        <li>Albanian &amp; English, light &amp; dark themes, fully responsive down to small phones</li>
+      </ul>
+      <ul class="tags"><li>Node.js</li><li>PostgreSQL (Neon)</li><li>JavaScript</li><li>REST API</li><li>Vercel</li></ul>
+      <div class="details__links">
+        <a class="btn btn--primary btn--sm" href="https://rentigo-rose.vercel.app/" target="_blank" rel="noopener">Open the live site ↗</a>
+        <a class="btn btn--ghost btn--sm" href="https://github.com/Arianitxhafa/Rentigo" target="_blank" rel="noopener">View code ↗</a>
+      </div>
+    </template>
+
+    <template id="details-trimtime">
+      <p class="details__kicker mono">04 · Mobile app · Lead developer · In development</p>
+      <h3>TrimTime</h3>
+      <p class="details__lead">A two-sided barbershop booking app — built in a team of two, where I developed the large majority of the app.</p>
+      <div class="details__gallery details__gallery--phones">
+        <img src="assets/trimtime/discover.webp" alt="TrimTime discover screen listing barbershops" width="560" height="1133" />
+        <img src="assets/trimtime/map.webp" alt="TrimTime map of nearby barbershops" width="560" height="1133" />
+        <img src="assets/trimtime/role.webp" alt="TrimTime role selection: client or barber" width="560" height="1133" />
+        <img src="assets/trimtime/login.webp" alt="TrimTime sign-in screen" width="560" height="1133" />
+      </div>
+      <h4>Highlights</h4>
+      <ul class="details__list">
+        <li>Clients discover nearby shops and book in seconds; owners manage calendar, staff, clients (CRM) and analytics</li>
+        <li>Real-time bookings with server-side pricing and database-level protection against double bookings</li>
+        <li>379 barbershops in 31 cities imported from OpenStreetMap, ranked by GPS distance</li>
+        <li>Maps, push reminders, camera portfolio, QR check-in and Face ID / fingerprint app lock</li>
+      </ul>
+      <ul class="tags"><li>React Native</li><li>Expo</li><li>TypeScript</li><li>Supabase</li><li>PostgreSQL</li></ul>
+      <div class="details__links">
+        <a class="btn btn--ghost btn--sm" href="https://github.com/Arianitxhafa/TrimTime" target="_blank" rel="noopener">View code ↗</a>
+      </div>
+    </template>
 
     <!-- CONTACT -->
-    <section class="contact" id="contact">
-      <p class="contact__kicker" data-reveal>Have a role, a project or just a question?</p>
-      <h2 class="contact__title">
-        <span class="line"><span class="split-words" data-reveal-title>Let's build</span></span>
-        <span class="line"><span class="split-words serif" data-reveal-title>something.</span></span>
-      </h2>
-      <a class="contact__mail" href="mailto:arianitxhafa95@gmail.com" data-magnetic data-cursor="Write">
-        <span>arianitxhafa95@gmail.com</span>
-        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </a>
-      <ul class="socials">
-        <li><a href="https://github.com/Arianitxhafa" target="_blank" rel="noopener" data-magnetic>GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/arianit-xhafa-910228408" target="_blank" rel="noopener" data-magnetic>LinkedIn</a></li>
-        <li><a href="mailto:arianitxhafa95@gmail.com" data-magnetic>Email</a></li>
-        <li><a href="Arianit_Xhafa_CV.pdf" download data-magnetic>Download CV</a></li>
-      </ul>
+    <section class="section" id="contact">
+      <header class="section__head section__head--center" data-reveal>
+        <p class="eyebrow">Contact</p>
+        <h2 class="section__title">Let's build <span class="gradient">something.</span></h2>
+        <p class="section__lead">Have a role, a project or a question? Send me a message — I usually reply within a day.</p>
+      </header>
+
+      <div class="contact">
+        <form class="contact__form card" data-reveal novalidate>
+          <h3>Send a message</h3>
+          <label>Name
+            <span class="field"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <input name="name" autocomplete="name" required maxlength="80" placeholder="Your name" /></span>
+          </label>
+          <label>Email
+            <span class="field"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              <input name="email" type="email" autocomplete="email" required maxlength="120" placeholder="you@company.com" /></span>
+          </label>
+          <label>Message
+            <span class="field field--area"><textarea name="message" rows="5" required maxlength="2000" placeholder="Hi Arianit, …"></textarea></span>
+          </label>
+          <button class="btn btn--primary btn--block" type="submit">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m4 12 16-8-6 16-2.5-6.5L4 12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            Send message
+          </button>
+          <p class="form__note" role="status">Opens your email app with the message ready to send.</p>
+        </form>
+
+        <div class="contact__side">
+          <a class="reach card" href="mailto:arianitxhafa95@gmail.com" data-reveal>
+            <span class="reach__icon"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+            <span><b>Email</b><small>arianitxhafa95@gmail.com</small></span><i>↗</i>
+          </a>
+          <a class="reach card" href="https://www.linkedin.com/in/arianit-xhafa-910228408" target="_blank" rel="noopener" data-reveal>
+            <span class="reach__icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4V21H3V9.75Zm6.5 0h3.8v1.54h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.07c0-1.21-.02-2.77-1.69-2.77-1.69 0-1.95 1.32-1.95 2.68V21h-4V9.75Z"/></svg></span>
+            <span><b>LinkedIn</b><small>in/arianit-xhafa</small></span><i>↗</i>
+          </a>
+          <a class="reach card" href="https://github.com/Arianitxhafa" target="_blank" rel="noopener" data-reveal>
+            <span class="reach__icon"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg></span>
+            <span><b>GitHub</b><small>github.com/Arianitxhafa</small></span><i>↗</i>
+          </a>
+          <a class="reach reach--cv card" href="Arianit_Xhafa_CV.pdf" download data-reveal>
+            <span class="reach__icon"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span><b>Download my CV</b><small>One page · PDF</small></span><i>↓</i>
+          </a>
+          <p class="where mono" data-reveal><span class="chip__dot"></span>Mitrovica, Kosovo · <span class="clock">--:--</span> local time</p>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="footer__big" aria-hidden="true">ARIANIT XHAFA</div>
-    <div class="footer__row">
-      <span>© 2026 Arianit Xhafa</span>
-      <span>Designed &amp; built by hand — HTML, CSS, GSAP</span>
-      <a href="#top">Back to top ↑</a>
+    <div class="footer__inner">
+      <div>
+        <p class="footer__brand">Arianit<span class="gradient">.dev</span></p>
+        <p class="footer__line">Full-stack &amp; mobile developer from Kosovo — building products end to end.</p>
+      </div>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="#about">About</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a><a href="Arianit_Xhafa_CV.pdf" download>CV</a>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <span>© <span class="year">2026</span> Arianit Xhafa. Designed &amp; built by hand.</span>
+      <a href="#home" class="to-top">Back to top ↑</a>
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="main.js"></script>
+  <!-- Project details and full-size certificates open in these dialogs -->
+  <dialog class="modal modal--details" aria-labelledby="details-title">
+    <div class="page-bar">
+      <button class="page-back modal__close" type="button"><span aria-hidden="true">←</span> Back</button>
+      <p class="crumbs mono"><span>Projects</span> <i aria-hidden="true">›</i> <b class="crumbs__current"></b></p>
+    </div>
+    <div class="modal__body"></div>
+  </dialog>
+  <dialog class="modal modal--zoom" aria-label="Certificate">
+    <button class="modal__close" type="button" aria-label="Close">✕</button>
+    <figure><img alt="" /><figcaption></figcaption></figure>
+  </dialog>
+
+  <script src="main.js?v=20261116i" defer></script>
+  <script type="module" src="lanyard.js?v=20261116i"></script>
 </body>
 </html>
