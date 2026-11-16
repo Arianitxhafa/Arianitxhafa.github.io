@@ -686,3 +686,21 @@ body { background: radial-gradient(120vw 80vh at 50% -10%, #0b1636 0%, transpare
   .footer a, .to-top { min-height: 40px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; padding-inline: 6px; }
 }
 .live, .wip { font-size: 0.75rem; }
+
+/* ── Phones and tablets: light versions of the heavy effects ──
+   Safari on iPhone keeps a separate GPU copy of whatever sits behind every blurred (backdrop-filter) element,
+   and redraws it whenever the background moves. Dozens of glass cards over the drifting nebula, plus the
+   animated card borders, ran iPhones out of memory around the projects ("A problem repeatedly occurred") and
+   Safari reloaded the page. On touch devices the surfaces are solid and the background holds still. */
+@media (max-width: 980px), (pointer: coarse) {
+  *, *::before, *::after { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .card { background: rgba(13, 20, 42, 0.94); }
+  .nav { background: rgba(10, 12, 22, 0.95); }
+  .tabs { background: rgba(10, 15, 34, 0.96); }
+  .modal::backdrop, .modal--details::backdrop { background: rgba(2, 4, 14, 0.88); }
+  .modal--details .page-bar, .page-bar { background: rgba(4, 7, 20, 0.97); }
+  .nebula::before, .nebula::after { animation: none; will-change: auto; inset: 0; }
+  .stat::before, .project::before, .music::before { animation: none; display: none; }
+  .tech svg, .intro__pic img { filter: none; }
+  .js .section__head[data-reveal] .section__title { filter: none; }
+}
