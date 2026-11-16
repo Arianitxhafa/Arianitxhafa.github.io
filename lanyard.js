@@ -286,7 +286,7 @@ function start() {
     const stacked = matchMedia('(max-width: 980px)').matches && !short;
     const vh = innerHeight;
     // Card + clamp height in px. Keep these in step with .hero__badge's height in styles.css.
-    const cardPx = short ? Math.min(400, vh * 0.86) : stacked ? Math.min(470, vh * 0.6, cw * 1.12) : Math.max(420, Math.min(vh * 0.64, 700));
+    const cardPx = short ? Math.min(400, vh * 0.62) : stacked ? Math.min(470, vh * 0.6, cw * 1.12) : Math.max(420, Math.min(vh * 0.64, 700));
     pxPerUnit = cardPx / (CARD_H + CLIP);
     halfH = ch / pxPerUnit / 2;
     halfW = halfH * camera.aspect;
@@ -297,7 +297,8 @@ function start() {
     const ax = stacked ? cw / 2 : b.left - c.left + b.width * 0.5;
     toWorld(ax, -60, anchor);
     // On phones the card hangs lower, so the name on the strap shows between the navbar and the clamp.
-    const restTopPx = short ? 70 : stacked ? 230 : Math.max(110, vh * 0.22);
+    // How far below the top the card hangs: leaves enough strap above it for the whole "AX Arianit Xhafa".
+    const restTopPx = short ? Math.max(70, vh * 0.36) : stacked ? 250 : Math.max(140, vh * 0.27);
     ropeLength = (restTopPx + 60) / pxPerUnit;
     segLen = ropeLength / SEGMENTS;
     // "Drag · click to flip" is placed under the card's real position (see placeHint), in badge coordinates.
@@ -908,23 +909,24 @@ function makeStrapTexture() {
     }
     // Round mark
     ctx.strokeStyle = '#ffffff';
-    ctx.lineWidth = 7;
-    ctx.font = '800 66px "Inter", sans-serif';
-    ctx.letterSpacing = '7px';
-    const nameEnd = c.width - 44;
+    // Compact type: the whole name has to fit in the stretch of strap that shows above the card on every screen.
+    ctx.lineWidth = 6;
+    ctx.font = '800 56px "Inter", sans-serif';
+    ctx.letterSpacing = '4px';
+    const nameEnd = c.width - 30;
     const nameStart = nameEnd - ctx.measureText('Arianit Xhafa').width;
     ctx.letterSpacing = '0px';
-    const markX = nameStart - 64;
-    ctx.beginPath(); ctx.arc(markX, 64, 38, 0, Math.PI * 2); ctx.stroke();
+    const markX = nameStart - 50;
+    ctx.beginPath(); ctx.arc(markX, 64, 31, 0, Math.PI * 2); ctx.stroke();
     ctx.fillStyle = '#ffffff';
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'center';
-    ctx.font = '800 38px "Inter", sans-serif';
-    ctx.fillText('AX', markX, 67);
+    ctx.font = '800 31px "Inter", sans-serif';
+    ctx.fillText('AX', markX, 66);
     // Name
     ctx.textAlign = 'left';
-    ctx.font = '800 66px "Inter", sans-serif';
-    ctx.letterSpacing = '7px';
+    ctx.font = '800 56px "Inter", sans-serif';
+    ctx.letterSpacing = '4px';
     ctx.fillText('Arianit Xhafa', nameStart, 68);
     ctx.letterSpacing = '0px';
     tex.needsUpdate = true;
